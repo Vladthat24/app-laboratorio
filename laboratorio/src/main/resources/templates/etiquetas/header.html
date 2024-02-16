@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<style type="text/css">
+section {
+	padding-bottom: 20px;
+}
+.user-img img{
+    
+    height: 70px;
+   /* box-shadow: 0px 0px 3px #848484;*/
+    /*border-radius: 50%;*/
+}
+</style>
+
+
+<header class="header">
+	<nav class="navbar navbar-expand-lg navbar-dark"
+		style="background-color: #174D92;">
+		<a class="navbar-brand user-img" href="#"><img
+			src="static/img/Logo-01.jpg"
+			th:src="@{/img/Logo-01.jpg}"/></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav m-auto">
+
+				<li class="nav-item"><a class="nav-link" href="#"
+					th:href="@{/userForm}"
+					th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Usuarios</a>
+				</li>
+					<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">
+						Análisis Clínicos </a>
+
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#"
+							th:href="@{/hematologia}">Hematología
+							</a> 
+							<a class="dropdown-item" href="#"
+							th:href="@{/bioquimica}">Bioquimica
+							</a>
+							<a class="dropdown-item" href="#"
+							th:href="@{/inmunologia}">Inmunología
+							</a>
+							<a class="dropdown-item" href="#"
+							th:href="@{/microbiologia}">Microbiología
+							</a> 
+							<a class="dropdown-item" href="#"
+							th:href="@{/controlCalidad}">Control de Calidad
+							</a>   
+							
+					</div></li>
+					
+					<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">
+						Muestras y pruebas </a>
+
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#"
+							th:href="@{/ins}">Muestras derivadas al INS - LRSP
+							</a> 
+							<a class="dropdown-item" href="#"
+							th:href="@{/mpcovid19}">Muestras y pruebas COVID-19
+							</a>
+					</div></li>
+					<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">
+						Resultados </a>
+
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#"
+							th:href="@{/listaHematologia}">Hematología
+							</a> 
+							<a class="dropdown-item" href="#"
+							th:href="@{/listaBioquimica}">Bioquimica
+							</a>
+							<a class="dropdown-item" href="#"
+							th:href="@{/listaInmunologia}">Inmunología
+							</a>
+							<a class="dropdown-item" href="#"
+							th:href="@{/listaMicrobiologia}">Microbiología
+							</a> 
+							<a class="dropdown-item" href="#"
+							th:href="@{/listaControlCalidad}">Control de Calidad
+							</a>
+							<a class="dropdown-item" href="#"
+							th:href="@{/listaIns}">Muestras derivadas al INS - LRSP
+							</a> 
+							<a class="dropdown-item" href="#"
+							th:href="@{/listaMpcovid19}">Toma de Muestras y Pruebas COVID-19
+							</a>    
+							
+					</div></li>
+					<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">
+						Dashboard </a>
+
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="#"
+							th:href="@{/consResultados}">Consolidado Resultados
+							</a> 
+						<a class="dropdown-item" href="#"
+							th:href="@{/dashExaCli}">Dashboard Ris
+							</a> 
+					</div></li>
+					
+			</ul>
+			<form class="form-inline my-2 my-lg-0">
+
+				<ul>
+					<li class="nav-item dropdown"><a style="color: white;"
+						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+						role="button" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false" th:each="user: ${userList}"
+						th:if="${#authentication.getPrincipal().getUsername() == user.username}">
+							<i class="fas fa-user"></i> <span id="user"
+							th:text="${user.firstName}+' '+${user.lastName}"></span><br>
+							- <span id="rol1" th:text="${user.getRoles[0].getName}"> </span><br>
+							<span id="rol1" th:text="${user.establecimiento.descripcionEstablecimiento}"></span>
+							<span class="float-right"></span>
+					</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="#" th:each="user: ${userList}"
+								th:if="${#authentication.getPrincipal().getUsername() == user.username}"
+								th:href="@{'/editUser/'+ ${user.id}}">Cambiar Contraseña</a> <a
+								class="dropdown-item" href="#" th:href="@{/logout}"><span
+								class="float-right"><em class="fas fa-sign-out-alt"></em></span>Cerra
+								Sesión</a>
+						</div></li>
+				</ul>
+			</form>
+		</div>
+	</nav>
+
+</header>
+</html>

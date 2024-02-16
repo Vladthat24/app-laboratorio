@@ -1,0 +1,54 @@
+body{
+    background: url(../img/fondo.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+.main-section{
+    margin:0 auto;
+    margin-top:2%;
+}
+
+
+.card{
+	border-color: #174D92; 
+	border: 0px !important;
+}
+
+.card-body{
+   	/*background-color: #d1d3d6;*/
+    box-shadow: 0px 0px 3px #848484;
+    border: 0px !important;
+}
+
+label{
+	font-weight: bold;
+}
+
+.nav-tabs .nav-item a:not(.active){
+	background-color: #d1d3d6;
+}
+
+.nav-tabs{
+	border-bottom:0px;
+}
+.container{
+	font-size: 12px;
+	max-width: 60%;
+}
+.form-group{
+	margin-bottom: 5px;
+}
+.btn-info{
+    background-color: #174D92;
+    }
+.card-header{
+	background-color: #174D92;
+	}
+.tab-content{
+	border: 0px !important;
+}
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+	background-color: #174D92 !important;
+	border-color: #174D92 !important; 
+	color: white !important;
+}

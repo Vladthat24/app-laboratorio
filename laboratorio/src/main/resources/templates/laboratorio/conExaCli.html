@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../../../img/favicon.ico"
+	type="image/x-icon">
+<head>
+
+<title>DIRIS LIMA SUR - Consolidado</title>
+
+<!--JQUERY-->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+<link rel="stylesheet" type="text/css"
+	href="static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+
+<!-- Los iconos tipo Solid de Fontawesome-->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+<!-- Nuestro css-->
+<link rel="stylesheet" type="text/css" href="static/css/user-form.css"
+	th:href="@{/css/user-form.css}">
+<!-- DATA TABLE -->
+<script
+	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script
+	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+
+<script
+	src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
+<!-- SUM()  Datatables-->
+<script src="https://cdn.datatables.net/plug-ins/1.10.20/api/sum().js"></script>
+
+<script
+	src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+<script
+	src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+
+<script
+	src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script
+	src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"
+	crossorigin="anonymous"></script>
+
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+
+
+<script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+						//Asegurate que el id que le diste a la tabla sea igual al texto despues del simbolo #
+						today = new Date();
+						h = today.getHours();
+						m = today.getMinutes();
+						s = today.getSeconds();
+						d = today.getDate();
+						mo = today.getMonth() + 1;
+						y = today.getFullYear();
+
+						fechaReporte = d + "/" + mo + "/" + y + "  " + h + ":"
+								+ m + ":" + s;
+
+						$('#estudiosList')
+								.DataTable(
+										{
+											"order" : [ 0, 'asc' ],
+											pageLength : 25,
+											dom : '<lp>Bfrtip',
+											buttons : [
+
+													/*{ //imprimir
+														extend : 'print',
+														footer : true,
+														text : '<button class="btn btn-success">Exportar a Excel <i class="fas fa-file-excel"></i></button>',
+														filename : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														title : 'Resultado de Inspeccion - '
+																+ fechaReporte
+													},*/
+													{
+														extend : 'excelHtml5',
+														footer : true,
+														text : '<button class="btn btn-success">Exportar a Excel <i class="fas fa-file-excel"></i></button>',
+														filename : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														title : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														exportOptions : {
+															stripHtml : false,
+															columns : [ 0, 1,
+																	2, 3, 4, 5,
+																	7, 8, 9 ]
+														}
+													},
+													{
+														extend : 'pdfHtml5',
+														footer : true,
+														orientation : 'landscape',
+														pageSize : 'LEGAL',
+														text : '<button class="btn btn-danger">Exportar a PDF <i class="far fa-file-pdf"></i></button>',
+														filename : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														title : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														exportOptions : {
+															stripHtml : false,
+															columns : [ 0, 1,
+																	2, 3, 4, 5,
+																	7, 8, 9 ]
+														}
+													},
+													{
+														extend : 'csvHtml5',
+														footer : true,
+														text : '<button class="btn btn-success">Exportar a CSV <i class="fas fa-file-csv"></i></button>',
+														filename : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														title : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														exportOptions : {
+															stripHtml : false,
+															columns : [ 0, 1,
+																	2, 3, 4, 5,
+																	7, 8, 9 ]
+														}
+													},
+
+											],
+											language : {
+												"sProcessing" : "Procesando...",
+												"sLengthMenu" : "Mostrar _MENU_ registros",
+												"sZeroRecords" : "No se encontraron resultados",
+												"sEmptyTable" : "Ningún dato disponible en esta tabla",
+												"sInfo" : "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+												"sInfoEmpty" : "Mostrando registros del 0 al 0 de un total de 0 registros",
+												"sInfoFiltered" : "(filtrado de un total de _MAX_ registros)",
+												"sInfoPostFix" : "",
+												"sSearch" : "Buscar:",
+												"sUrl" : "",
+												"sInfoThousands" : ",",
+												"sLoadingRecords" : "Cargando...",
+												"oPaginate" : {
+													"sFirst" : "Primero",
+													"sLast" : "Último",
+													"sNext" : "Siguiente",
+													"sPrevious" : "Anterior"
+												},
+												"oAria" : {
+													"sSortAscending" : ": Activar para ordenar la columna de manera ascendente",
+													"sSortDescending" : ": Activar para ordenar la columna de manera descendente"
+												},
+												"decimal" : ",",
+												"thousands" : "."
+											},
+											responsive : {
+												details : {
+													type : 'column'
+												}
+											},
+											columnDefs : [ {
+												className : 'dtr-control',
+												orderable : false,
+												targets : 0
+											} ]
+										}).draw();
+					});
+</script>
+
+
+<style type="text/css">
+.table {
+	font-size: 12px;
+}
+
+.parent {
+	color: #174D92;
+	Font-weight: bold;
+}
+
+.dtr-details {
+	width: 100%;
+}
+</style>
+<style type="text/css">
+.table, form {
+	font-size: 12px;
+}
+
+input {
+	color: grey;
+}
+
+input[required] {
+	border-color: blue;
+	box-shadow: 0px 0px 5px blue;
+}
+
+input:invalid {
+	border-color: red;
+	box-shadow: 0px 0px 5px blue;
+}
+
+input:valid {
+	border-color: green;
+	box-shadow: 0px 0px 5px green;
+}
+
+select[required] {
+	border-color: blue;
+	box-shadow: 0px 0px 5px blue;
+}
+
+select:invalid {
+	border-color: red;
+	box-shadow: 0px 0px 5px blue;
+}
+
+select:valid {
+	border-color: green;
+	box-shadow: 0px 0px 5px green;
+}
+</style>
+<style type="text/css">
+.form-control {
+	font-size: 12px;
+}
+</style>
+
+<script>
+	$(function() {
+		$("#DPROGRAMACION").datepicker({
+			dateFormat : 'dd/mm/yy'
+		});
+	});
+</script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="static/css/navbar.css"
+	th:href="@{/css/navbar.css}">
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var n = (new Date()).getFullYear()
+
+		var select = document.getElementById("ano");
+		for (var i = n; i >= 2022; i--)
+			select.options.add(new Option(i, i));
+
+		function obtenerNombreMes(numero) {
+			var today = new Date();
+			let miFecha = new Date(today.getFullYear(), today.getMonth(), 0);
+			if (0 < numero && numero <= 12) {
+				miFecha.setMonth(numero - 1);
+				return new Intl.DateTimeFormat('es-PE', {
+					month : 'long'
+				}).format(miFecha);
+			} else {
+				return null;
+			}
+
+		}
+		var selectMes = document.getElementById("mes");
+		for (var i = 1; i <= 12; i++) {
+			console.log(new Option(obtenerNombreMes(i), i))
+			selectMes.options.add(new Option(obtenerNombreMes(i), i));
+		}
+
+	})
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		setTimeout(function() {
+			$('#success-alert').hide('slow');
+		}, 3000); // <-- time in milliseconds
+
+		var table = $('#estudiosList').DataTable();
+
+		$('#estudiosList tbody').on('click', 'tr', function() {
+			var data = table.row(this).data();
+			document.getElementById('codigo').value = data[0];
+		});
+		$('#estudiosList tbody').on('click', 'tr', function() {
+			var data = table.row(this).data();
+			document.getElementById('codigoFoto1').value = data[0];
+		});
+
+		$('#estudiosList tbody').on('click', 'tr', function() {
+			var data = table.row(this).data();
+			document.getElementById('codigoFoto2').value = data[0];
+		});
+
+	})
+</script>
+
+</head>
+<body>
+	<div th:include="etiquetas/header.html" th:remove="tag"></div>
+
+
+	<div class="container" style="max-width: 100%;">
+		<div class="mx-auto col-sm-12 main-section" id="myTab" role="tablist">
+
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="list" role="tabpanel"
+					aria-labelledby="list-tab">
+					<div class="card">
+						<div class="card-header">
+							<form action="#" th:action="@{/conExaCli}" class="form"
+								method="post">
+								<div class="form-group row">
+									<h4 class="text-center">Consolidado de Exámenes Clínicos</h4>
+									<div class="col-2">
+										<select name="ano" id="ano" class="form-control"></select>
+									</div>
+									<div class="col-2">
+										<select name="mes" id="mess" class="form-control"
+											style="text-transform: uppercase;"
+											onkeyup="javascript:this.value=this.value.toUpperCase();">
+											<option value="1">Enero</option>
+															<option value="2">Febrero</option>
+															<option value="3">Marzo</option>
+															<option value="4">Abril</option>
+															<option value="5">Mayo</option>
+															<option value="6">Junio</option>
+															<option value="7">Julio</option>
+															<option value="8">Agosto</option>
+															<option value="9">Septiembre</option>
+															<option value="10">Octubre</option>
+															<option value="11">Noviembre</option>
+															<option value="12">Diciembre</option>
+
+										</select>
+
+									</div>
+									<div class="col-2">
+
+										<button type="submit" id="show" data-toggle="modal"
+											class="btn btn-primary" data-target="#saludo"
+											th:text="Buscar"></button>
+
+									</div>
+								</div>
+							</form>
+
+						</div>
+
+						<div class="card-body">
+							<div class="table-responsive">
+								<table id="estudiosList" style="font-size: 1.2em;"
+									class="table table-bordered table-hover table-striped table-sm"
+									cellspacing="0" width="100%">
+
+									<thead class="thead-light">
+										<tr>
+											<th>ID</th>
+											<th>FECHA INSPECCION</th>
+											<th>USUARIO REG</th>
+											<th>RIS</th>
+											<th>ESTABLECIMIENTO</th>
+											<th>CONSOLIDADO DE LA INSPECCIÓN (%)</th>
+											<th>PROGRESO</th>
+											<th>ORGANIZACIÓN E IMAGEN INSTITUCIONAL (%)</th>
+											<th>BIOSEGURIDAD (%)</th>
+											<th>FARMACIA (%)</th>
+											<th>MATERIAL Y EQUIPAMIENTO BASICO (%)</th>
+											<th>FOTOS</th>
+											<th>EDITAR</th>
+											<th>GENERAR PDF</th>
+											<th>SUBIR / BAJAR PDF</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-th-each="li: ${listaInspeccion}">
+											<td th:text="${li.idInspeccion}"></td>
+											<td th:text="${li.fechaRegInsp}"></td>
+											<td th:text="${li.usuarioRegInsp}"></td>
+											<td th:text="${li.ris.descripcionRis}"></td>
+											<td
+												th:text="${li.establecimiento.descripcionEstablecimiento}"></td>
+											<td th:text="${li.resultadoTotalIns}"
+												style="text-align: right;"></td>
+											<td><span> <progress id="file1" max="100"
+														th:value="${li.resultadoTotalIns}"></progress></span></td>
+											<td th:text="${li.cumplimientoOrganizacion}"
+												style="text-align: right;"></td>
+											<td th:text="${li.cumplimientoBioseguridad}"
+												style="text-align: right;"></td>
+											<td th:text="${li.cumplimientoFarmacia}"
+												style="text-align: right;"></td>
+											<td th:text="${li.cumplimientoEquipamiento}"
+												style="text-align: right;"></td>
+											<td><a href="#" id="show" target="blanck"
+												th:if="${li.foto1}== null" data-toggle="modal"
+												data-target="#subirFoto1"><em class="fas fa-2x">&#xf093;</em></a>
+												<a href="#" id="show" target="blanck"
+												th:if="${li.foto1}!= null"
+												th:href="@{'/downloadFoto/{foto}'(foto=${li.foto1})}"><em
+													style="color: green; border: 0px; background: none;"
+													class="fas fa-2x">&#xf03e;</em></a> <a href="#" id="show"
+												target="blanck" th:if="${li.foto2}!= null"
+												th:href="@{'/downloadFoto/{foto}'(foto=${li.foto2})}"><em
+													style="color: green; border: 0px; background: none;"
+													class="fas fa-2x">&#xf03e;</em></a> <a href="#" id="show"
+												target="blanck" th:if="${li.foto2}== null"
+												data-toggle="modal" data-target="#subirFoto2"><em
+													class="fas fa-2x">&#xf093;</em></a></td>
+											<td><a
+												th:href="@{'/editarInspeccion/{id}'(id=${li.idInspeccion})}">
+													<em class="fas fa-2x">&#xf044;</em>
+											</a></td>
+											<td><a href="#" id="show" target="_blanck"
+												th:href="@{'/crearPDF/'+${li.idInspeccion}}"><em
+													class="fa fa-2x">&#xf1c1;</em></a></td>
+											<td><a href="#" id="show" data-toggle="modal"
+												th:if="${li.imagen}== null" data-target="#subirPdf"><em
+													class="fa fa-2x">&#xf093;</em></a> <a
+												th:if="${li.imagen}!= null"
+												style="color: green; border: 0px; background: none;"
+												th:href="@{'/download/{codDonw}' (codDonw=${li.idInspeccion})}">
+													<em class="fa fa-2x">&#xf1c1;</em>
+											</a></td>
+
+										</tr>
+									</tbody>
+
+								</table>
+
+								<div class="modal fade" id="subirPdf" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel">
+													<em class="fa fa-2x">&#xf093;</em> Subir PDF
+												</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<form action="#" th:action="@{/guardarPDF}"
+													enctype="multipart/form-data" style="font-size: 12px;"
+													class="form" method="post">
+													<input type="hidden" id="codigo" name="codigo" />
+													<div class="form-group row">
+														<div class="col-lg-12">
+															<input type="file" class="form-control" id="archivo"
+																name="archivo">
+														</div>
+													</div>
+
+
+													<div class="modal-footer">
+														<input type="reset" class="btn btn-secondary"
+															value="Cancel"> <input type="submit"
+															class="btn btn-primary" value="Guardar">
+														<button type="button" class="btn btn-primary"
+															data-dismiss="modal">Close</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal fade" id="subirFoto1" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel">
+													<em class="fa fa-2x">&#xf093;</em> Subir Foto
+												</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<form action="#" th:action="@{/guardarFoto1}"
+													enctype="multipart/form-data" style="font-size: 12px;"
+													class="form" method="post">
+													<input type="hidden" id="codigoFoto1" name="codigoFoto1" />
+													<div class="form-group row">
+														<div class="col-lg-12">
+															<input type="file" class="form-control" id="archivoFoto1"
+															name="archivoFoto1" accept="image/png,image/jpeg">
+														</div>
+													</div>
+
+
+													<div class="modal-footer">
+														<input type="reset" class="btn btn-secondary"
+															value="Cancel"> <input type="submit"
+															class="btn btn-primary" value="Guardar">
+														<button type="button" class="btn btn-primary"
+															data-dismiss="modal">Close</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal fade" id="subirFoto2" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel">
+													<em class="fa fa-2x">&#xf093;</em> Subir Foto
+												</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<form action="#" th:action="@{/guardarFoto2}"
+													enctype="multipart/form-data" style="font-size: 12px;"
+													class="form" method="post">
+													<input type="hidden" id="codigoFoto2" name="codigoFoto2" />
+													<div class="form-group row">
+														<div class="col-lg-12">
+															<input type="file" class="form-control" id="archivoFoto2"
+																name="archivoFoto2" accept="image/png,image/jpeg">
+														</div>
+													</div>
+
+
+													<div class="modal-footer">
+														<input type="reset" class="btn btn-secondary"
+															value="Cancel"> <input type="submit"
+															class="btn btn-primary" value="Guardar">
+														<button type="button" class="btn btn-primary"
+															data-dismiss="modal">Close</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- row -->
+
+	<!-- Call to Action -->
+	<div th:include="etiquetas/footer.html" th:remove="tag"></div>
+</body>
+</html>

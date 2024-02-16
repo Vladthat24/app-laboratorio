@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+<head>
+	<title>CENATE - Usuarios</title>
+
+	<!--JQUERY-->
+	<script
+		src="https://code.jquery.com/jquery-3.3.1.min.js"
+ 			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+ 			crossorigin="anonymous"></script>
+
+	<!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+     <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script 
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+	<!-- Los iconos tipo Solid de Fontawesome-->
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+	<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+	<!-- Nuestro css-->
+	<link rel="stylesheet" type="text/css" href="static/css/user-form.css"
+		th:href="@{/css/user-form.css}">
+	<!-- DATA TABLE -->
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">	
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
+	<!-- SUM()  Datatables-->
+<script src="https://cdn.datatables.net/plug-ins/1.10.20/api/sum().js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+
+	<script type="text/javascript">
+	  
+	    
+	    $(document).ready(function() {
+	        //Asegurate que el id que le diste a la tabla sea igual al texto despues del simbolo #
+	        $('#userList').DataTable({
+	        	dom: '<lp>Bfrtip',
+	        	buttons: [
+		            { extend: 'excelHtml5', 
+		            		footer: true,
+		            		text: '<button class="btn btn-success">Exportar a Excel <i class="fas fa-file-excel"></i></button>'
+		            		},
+		           	{ extend: 'pdfHtml5', 
+			            	footer: true ,
+			                orientation : 'landscape',
+			                pageSize : 'A1',
+			                text: '<button class="btn btn-danger">Exportar a PDF <i class="far fa-file-pdf"></i></button>'
+			                },
+		            { extend: 'csvHtml5',
+		                	footer: true,
+			            	text: '<button class="btn btn-success">Exportar a CSV <i class="fas fa-file-csv"></i></button>'
+			            	},
+			            	
+		        ],
+	        });
+	    } );
+	</script>
+	
+	<script type="text/javascript">
+	function startTime(){
+
+		today=new Date();
+
+		h=today.getHours();
+
+		m=today.getMinutes();
+
+		s=today.getSeconds();
+		
+		d=today.getDate();
+		
+		mo=today.getMonth()+1;
+		
+		y=today.getFullYear();
+
+		m=checkTime(m);
+
+		s=checkTime(s);
+		
+		document.getElementById('reloj').innerHTML=d+"/"+mo+"/"+y+"  "+h+":"+m+":"+s;
+
+		t=setTimeout('startTime()',500);}
+
+		function checkTime(i)
+
+		{if (i<10) {i=>"0" + i;}return i;}
+
+		window.onload=function(){startTime();}
+		
+		
+</script>
+<script type="text/javascript">
+function startTime(){
+
+	today=new Date();
+
+	h=today.getHours().toString().length<2?"0"+today.getHours():today.getHours();
+
+	m=today.getMinutes().toString().length<2?"0"+today.getMinutes():today.getMinutes();
+
+	s=today.getSeconds().toString().length<2?"0"+today.getSeconds():today.getSeconds() ;
+	
+	d=today.getDate().toString().length<2?"0"+today.getDate():today.getDate();
+	
+	mo=("0" + (today.getMonth()+1)).substr(-2);
+	
+	
+	y=today.getFullYear();
+
+	m=checkTime(m);
+
+	s=checkTime(s);
+	
+	document.getElementById('fecha_reg').value=y+"-"+mo+"-"+d+" "+h+":"+m+":"+s;
+	document.getElementById('fecha_mod').value=y+"-"+mo+"-"+d+" "+h+":"+m+":"+s;
+	}
+
+	function checkTime(i)
+
+	{if (i<10) {i=>"0" + i;}return i;}
+
+	window.onload=function(){startTime();
+	
+	}
+	
+	
+</script>
+<link rel="stylesheet" type="text/css" href="static/css/navbar.css"
+		th:href="@{/css/navbar.css}">
+		<style type="text/css">
+		table.dataTable td{
+	padding: 5px;
+}
+		</style>
+</head>
+<body>
+	<div th:include="etiquetas/header.html" th:remove="tag"></div>
+	<div class="container" style="max-width: 70%;">
+	<div class="mx-auto col-sm-12 main-section" id="myTab" role="tablist">
+		<ul class="nav nav-tabs justify-content-end" >
+			
+			<li class="nav-item">
+			<a class="nav-link " th:classappend=" ${listTab}" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false"
+			th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" >Usuarios</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" th:classappend=" ${formTab}" id="form-tab" data-toggle="tab" href="#form" role="tab" aria-controls="form" aria-selected="true">Nuevo Usuario</a>				   	
+			</li>
+			
+		</ul>
+		<div class="tab-content" id="myTabContent">
+			
+			<div class="tab-pane fade show" th:classappend=" ${listTab}" id="list" role="tabpanel" aria-labelledby="list-tab" 
+			th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+				<div class="card">
+					<div class="card-header">
+						<h4>Lista de Usuarios</h4>
+					</div>
+					<div class="card-body">
+						<div th:include="user-form/user-list.html" th:remove="tag"></div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade show"  th:classappend=" ${formTab}" id="form" role="tabpanel" aria-labelledby="form-tab" >
+				<div class="card">
+					<div class="card-header">
+						<h4>Información de Usuario</h4>
+					</div>
+					<div class="card-body">
+						<div th:include="user-form/user-form.html" th:remove="tag"></div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div th:if="${editMode}" th:include="user-form/change-password.html" th:remove="tag"></div>
+<div th:include="user-form/confirm-delete-dialog.html" th:remove="tag"></div>
+
+<div th:include="etiquetas/footer.html" th:remove="tag"></div>
+</body>
+</html>

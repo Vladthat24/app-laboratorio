@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../../../img/favicon.ico"
+	type="image/x-icon">
+<head>
+
+<title>DIRIS LIMA SUR - Consolidado Resultado</title>
+
+<!--JQUERY-->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+<link rel="stylesheet" type="text/css"
+	href="static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+
+<!-- Los iconos tipo Solid de Fontawesome-->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+<!-- Nuestro css-->
+<link rel="stylesheet" type="text/css" href="static/css/user-form.css"
+	th:href="@{/css/user-form.css}">
+<!-- DATA TABLE -->
+<script
+	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script
+	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+
+<script
+	src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
+<!-- SUM()  Datatables-->
+<script src="https://cdn.datatables.net/plug-ins/1.10.20/api/sum().js"></script>
+
+<script
+	src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+<script
+	src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+
+<script
+	src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script
+	src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+
+<script
+	src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap4.min.js"></script>
+
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap4.min.css">
+
+
+<script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+						//Asegurate que el id que le diste a la tabla sea igual al texto despues del simbolo #
+						today = new Date();
+						h = today.getHours();
+						m = today.getMinutes();
+						s = today.getSeconds();
+						d = today.getDate();
+						mo = today.getMonth() + 1;
+						y = today.getFullYear();
+
+						fechaReporte = d + "/" + mo + "/" + y + "  " + h + ":"
+								+ m + ":" + s;
+
+						$('#estudiosList')
+								.DataTable(
+										{
+											"order" : false,
+											pageLength : 10,
+											dom : '<lp>Bfrtip',
+											buttons : [
+
+													/*{ //imprimir
+														extend : 'print',
+														footer : true,
+														text : '<button class="btn btn-success">Exportar a Excel <i class="fas fa-file-excel"></i></button>',
+														filename : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														title : 'Resultado de Inspeccion - '
+																+ fechaReporte
+													},*/
+													{
+														extend : 'excelHtml5',
+														footer : true,
+														text : '<button class="btn btn-success">Exportar a Excel <i class="fas fa-file-excel"></i></button>',
+														filename : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														title : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														exportOptions : {
+															stripHtml : false,
+															columns : [ 0, 1,
+																	2, 3, 4, 5,
+																	7, 8, 9,
+																	10, 11, 12 ]
+														}
+													},
+													{
+														extend : 'pdfHtml5',
+														footer : true,
+														orientation : 'landscape',
+														pageSize : 'LEGAL',
+														text : '<button class="btn btn-danger">Exportar a PDF <i class="far fa-file-pdf"></i></button>',
+														filename : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														title : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														exportOptions : {
+															stripHtml : false,
+															columns : [ 0, 1,
+																	2, 3, 4, 5,
+																	7, 8, 9 ]
+														}
+													},
+													{
+														extend : 'csvHtml5',
+														footer : true,
+														text : '<button class="btn btn-success">Exportar a CSV <i class="fas fa-file-csv"></i></button>',
+														filename : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														title : 'Resultado de Inspeccion - '
+																+ fechaReporte,
+														exportOptions : {
+															stripHtml : false,
+															columns : [ 0, 1,
+																	2, 3, 4, 5,
+																	7, 8, 9 ]
+														}
+													},
+
+											],
+											language : {
+												"sProcessing" : "Procesando...",
+												"sLengthMenu" : "Mostrar _MENU_ registros",
+												"sZeroRecords" : "No se encontraron resultados",
+												"sEmptyTable" : "Ningún dato disponible en esta tabla",
+												"sInfo" : "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+												"sInfoEmpty" : "Mostrando registros del 0 al 0 de un total de 0 registros",
+												"sInfoFiltered" : "(filtrado de un total de _MAX_ registros)",
+												"sInfoPostFix" : "",
+												"sSearch" : "Buscar:",
+												"sUrl" : "",
+												"sInfoThousands" : ",",
+												"sLoadingRecords" : "Cargando...",
+												"oPaginate" : {
+													"sFirst" : "Primero",
+													"sLast" : "Último",
+													"sNext" : "Siguiente",
+													"sPrevious" : "Anterior"
+												},
+												"oAria" : {
+													"sSortAscending" : ": Activar para ordenar la columna de manera ascendente",
+													"sSortDescending" : ": Activar para ordenar la columna de manera descendente"
+												},
+												"decimal" : ",",
+												"thousands" : "."
+											},
+
+										}).draw();
+					});
+</script>
+
+
+<style type="text/css">
+.table {
+	font-size: 12px;
+}
+
+.parent {
+	color: #174D92;
+	Font-weight: bold;
+}
+
+.dtr-details {
+	width: 100%;
+}
+</style>
+<style type="text/css">
+.table, form {
+	font-size: 12px;
+}
+
+input {
+	color: grey;
+}
+
+input[required] {
+	border-color: blue;
+	box-shadow: 0px 0px 5px blue;
+}
+
+input:invalid {
+	border-color: red;
+	box-shadow: 0px 0px 5px blue;
+}
+
+input:valid {
+	border-color: green;
+	box-shadow: 0px 0px 5px green;
+}
+
+select[required] {
+	border-color: blue;
+	box-shadow: 0px 0px 5px blue;
+}
+
+select:invalid {
+	border-color: red;
+	box-shadow: 0px 0px 5px blue;
+}
+
+select:valid {
+	border-color: green;
+	box-shadow: 0px 0px 5px green;
+}
+</style>
+<style type="text/css">
+.form-control {
+	font-size: 12px;
+}
+</style>
+
+<script>
+	$(function() {
+		$("#DPROGRAMACION").datepicker({
+			dateFormat : 'dd/mm/yy'
+		});
+	});
+</script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="static/css/navbar.css"
+	th:href="@{/css/navbar.css}">
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var n = (new Date()).getFullYear()
+
+		var select = document.getElementById("ano");
+		for (var i = n; i >= 2022; i--)
+			select.options.add(new Option(i, i));
+
+		function obtenerNombreMes(numero) {
+			var today = new Date();
+			let miFecha = new Date(today.getFullYear(), today.getMonth(), 0);
+			if (0 < numero && numero <= 12) {
+				miFecha.setMonth(numero - 1);
+				return new Intl.DateTimeFormat('es-PE', {
+					month : 'long'
+				}).format(miFecha);
+			} else {
+				return null;
+			}
+
+		}
+
+	})
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		setTimeout(function() {
+			$('#success-alert').hide('slow');
+		}, 3000); // <-- time in milliseconds
+
+		var table = $('#estudiosList').DataTable();
+
+		$('#estudiosList tbody').on('click', 'tr', function() {
+			var data = table.row(this).data();
+			document.getElementById('codigo').value = data[0];
+		});
+		$('#estudiosList tbody').on('click', 'tr', function() {
+			var data = table.row(this).data();
+			document.getElementById('codigoFoto1').value = data[0];
+		});
+
+		$('#estudiosList tbody').on('click', 'tr', function() {
+			var data = table.row(this).data();
+			document.getElementById('codigoFoto2').value = data[0];
+		});
+
+	})
+</script>
+
+<script type="text/javascript">
+	var tableToExcel = (function() {
+		var uri = 'data:application/vnd.ms-excel;base64,', template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>', base64 = function(
+				s) {
+			return window.btoa(unescape(encodeURIComponent(s)))
+		}, format = function(s, c) {
+			return s.replace(/{(\w+)}/g, function(m, p) {
+				return c[p];
+			})
+		}
+		return function(table, name) {
+			if (!table.nodeType)
+				table = document.getElementById(table)
+			var ctx = {
+				worksheet : name || 'Worksheet',
+				table : table.innerHTML
+			}
+			window.location.href = uri + base64(format(template, ctx))
+		}
+	})()
+</script>
+
+
+<script type="text/javascript">
+
+$(document).ready(sumarCAC); 
+$(document).ready(sumarCCGG);
+$(document).ready(sumarMDR);
+$(document).ready(sumarTMPC);
+$(document).ready(sumarIDSC);
+$(document).ready(sumarTAL);
+
+$(document).ready(sumarEH);
+$(document).ready(sumarEB);
+$(document).ready(sumarEI);
+$(document).ready(sumarEM);
+$(document).ready(sumarTE);
+
+	
+	function sumarCAC() {
+	var total = 0;
+		$(".tAct").each(function() {
+			if (isNaN(parseFloat($(this).text()))) {
+				total += 0;
+			} else {
+				total += parseFloat($(this).text());
+			}
+		});
+		 $("#tConAnaCli").html(total);
+	}
+	
+	function sumarCCGG() {
+	var total = 0;
+		$(".tCCGG").each(function() {
+			if (isNaN(parseFloat($(this).text()))) {
+				total += 0;
+			} else {
+				total += parseFloat($(this).text());
+			}
+		});
+		 $("#tConCCGG").html(total);
+	}
+
+	function sumarMDR() {
+	var total = 0;
+		$(".tMDR").each(function() {
+			if (isNaN(parseFloat($(this).text()))) {
+				total += 0;
+			} else {
+				total += parseFloat($(this).text());
+			}
+		});
+		 $("#tConMDR").html(total);
+	}
+
+	function sumarTMPC() {
+	var total = 0;
+		$(".tTMPC").each(function() {
+			if (isNaN(parseFloat($(this).text()))) {
+				total += 0;
+			} else {
+				total += parseFloat($(this).text());
+			}
+		});
+		 $("#tConTMPC").html(total);
+	}
+
+	function sumarIDSC() {
+	var total = 0;
+		$(".tIDSC").each(function() {
+			if (isNaN(parseFloat($(this).text()))) {
+				total += 0;
+			} else {
+				total += parseFloat($(this).text());
+			}
+		});
+		 $("#tConIDSC").html(total);
+	}
+	function sumarTAL() {
+		var total = 0;
+			$(".tTAL").each(function() {
+				if (isNaN(parseFloat($(this).text()))) {
+					total += 0;
+				} else {
+					total += parseFloat($(this).text());
+				}
+			});
+			 $("#tConTAL").html(total);
+		}
+	
+	//ANALISIS CLINICOS PROCESADOS
+	function sumarEH() {
+		var total = 0;
+			$(".tEH").each(function() {
+				if (isNaN(parseFloat($(this).text()))) {
+					total += 0;
+				} else {
+					total += parseFloat($(this).text());
+				}
+			});
+			 $("#tConEH").html(total);
+		}
+	
+	function sumarEB() {
+		var total = 0;
+			$(".tEB").each(function() {
+				if (isNaN(parseFloat($(this).text()))) {
+					total += 0;
+				} else {
+					total += parseFloat($(this).text());
+				}
+			});
+			 $("#tConEB").html(total);
+		}
+	
+	function sumarEI() {
+		var total = 0;
+			$(".tEI").each(function() {
+				if (isNaN(parseFloat($(this).text()))) {
+					total += 0;
+				} else {
+					total += parseFloat($(this).text());
+				}
+			});
+			 $("#tConEI").html(total);
+		}
+	function sumarEM() {
+		var total = 0;
+			$(".tEM").each(function() {
+				if (isNaN(parseFloat($(this).text()))) {
+					total += 0;
+				} else {
+					total += parseFloat($(this).text());
+				}
+			});
+			 $("#tConEM").html(total);
+		}
+	function sumarTE() {
+		var total = 0;
+			$(".tTE").each(function() {
+				if (isNaN(parseFloat($(this).text()))) {
+					total += 0;
+				} else {
+					total += parseFloat($(this).text());
+				}
+			});
+			 $("#tConTE").html(total);
+		}
+	
+	
+
+</script>
+</head>
+<body>
+	<div th:include="etiquetas/header.html" th:remove="tag"></div>
+
+
+	<div class="container" style="max-width: 100%;">
+		<div class="mx-auto col-sm-12 main-section" id="myTab" role="tablist">
+
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="list" role="tabpanel"
+					aria-labelledby="list-tab">
+					<div class="card">
+						<div class="card-header">
+							<form action="#" th:action="@{/consResultados}" class="form"
+								method="post">
+								<div class="form-group row">
+									<h4 class="text-center">Consolidado Resultado</h4>
+									<div class="col-2">
+										<select name="ano" id="ano" class="form-control"></select>
+									</div>
+									<div class="col-2">
+										<select name="mes" id="mes" class="form-control"
+											style="text-transform: uppercase;"
+											onkeyup="javascript:this.value=this.value.toUpperCase();">
+											<option value="">Mes Inicio</option>
+											<option value="01">Enero</option>
+											<option value="02">Febrero</option>
+											<option value="03">Marzo</option>
+											<option value="04">Abril</option>
+											<option value="05">Mayo</option>
+											<option value="06">Junio</option>
+											<option value="07">Julio</option>
+											<option value="08">Agosto</option>
+											<option value="09">Septiembre</option>
+											<option value="10">Octubre</option>
+											<option value="11">Noviembre</option>
+											<option value="12">Diciembre</option>
+
+										</select>
+
+									</div>
+									<div class="col-2">
+										<select name="mes2" id="mes2" class="form-control"
+											style="text-transform: uppercase;"
+											onkeyup="javascript:this.value=this.value.toUpperCase();">
+											<option value="">Mes Fin</option>
+											<option value="01">Enero</option>
+											<option value="02">Febrero</option>
+											<option value="03">Marzo</option>
+											<option value="04">Abril</option>
+											<option value="05">Mayo</option>
+											<option value="06">Junio</option>
+											<option value="07">Julio</option>
+											<option value="08">Agosto</option>
+											<option value="09">Septiembre</option>
+											<option value="10">Octubre</option>
+											<option value="11">Noviembre</option>
+											<option value="12">Diciembre</option>
+
+										</select>
+
+									</div>
+									<div class="col-2">
+										<select name="esta" id="esta" class="form-control"
+											th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR'')')} or
+												${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+											<option value="">Seleccione un Establecimiento</option>
+											<option th:each="r : ${listaEstablecimientos}" th:value="${r.codEstablecimiento}"
+												class="opcion" th:text="${r.descripcionEstablecimiento}"
+												th:if="${r.laboratorio}=='1'">
+										</select> <select name="esta" id="esta" class="form-control"
+											th:each="user: ${userList}"
+											th:if="${#authentication.getPrincipal().getUsername() == user.username} and 
+										${#authorization.expression('hasRole(''ROLE_USER'')')}">
+											<option th:value="${user.establecimiento.codEstablecimiento}"
+												class="opcion"
+												th:text="${user.establecimiento.descripcionEstablecimiento}">
+										</select>
+									</div>
+									<div class="col-2">
+
+										<button type="submit" id="show" data-toggle="modal"
+											class="btn btn-primary" data-target="#saludo"
+											th:text="Buscar"></button>
+
+									</div>
+								</div>
+							</form>
+
+						</div>
+
+						<div class="card-body">
+							<div class="table-responsive">
+								<div>
+									<input type="button" class="btn btn-primary"
+										onclick="tableToExcel('testTable', 'W3C Example Table')"
+										value="Export to Excel">
+								</div>
+								<table id="testTable" style="font-size: 1.2em;"
+									class="table table-bordered table-hover table-striped table-sm dt-responsive nowrap"
+									cellspacing="0" width="100%">
+
+									<thead class="thead-light">
+										<tr>
+											<th th:text="${nomEstab}+' - ACTIVIDADES DE LABORATORIO AÑO '+${anob}"></th>
+											<th>ENERO</th>
+											<th>FEBRERO</th>
+											<th>MARZO</th>
+											<th>ABRIL</th>
+											<th>MAYO</th>
+											<th>JUNIO</th>
+											<th>JULIO</th>
+											<th>AGOSTO</th>
+											<th>SETIEMBRE</th>
+											<th>OCTUBRE</th>
+											<th>NOVIEMBRE</th>
+											<th>DICIEMBRE</th>
+											<th>TOTAL</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><b>CONSOLIDADO DE ANALISIS CLINICOS PROCESADOS</b></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tAct"
+												th:text="${t.mesReAc}=='1' ? ${t.anaCliReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tAct"
+												th:text="${t.mesReAc}=='2' ? ${t.anaCliReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tAct"
+												th:text="${t.mesReAc}=='3' ? ${t.anaCliReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tAct"
+												th:text="${t.mesReAc}=='4' ? ${t.anaCliReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tAct"
+												th:text="${t.mesReAc}=='5' ? ${t.anaCliReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tAct"
+												th:text="${t.mesReAc}=='6' ? ${t.anaCliReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tAct"
+												th:text="${t.mesReAc}=='7' ? ${t.anaCliReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tAct"
+												th:text="${t.mesReAc}=='8' ? ${t.anaCliReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tAct"
+												th:text="${t.mesReAc}=='9' ? ${t.anaCliReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tAct"
+												th:text="${t.mesReAc}=='10' ? ${t.anaCliReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tAct"
+												th:text="${t.mesReAc}=='11' ? ${t.anaCliReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tAct"
+												th:text="${t.mesReAc}=='12' ? ${t.anaCliReAc} : ''"></span></td>
+											<td><span id="tConAnaCli"></span> </td>
+
+										</tr>
+										<tr>
+											<td><b>CONTROL DE CALIDAD DE BK Y GOTA GRUESA</b></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tCCGG"
+												th:text="${t.mesReAc}=='1' ? ${t.conCalReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tCCGG"
+												th:text="${t.mesReAc}=='2' ? ${t.conCalReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tCCGG"
+												th:text="${t.mesReAc}=='3' ? ${t.conCalReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tCCGG"
+												th:text="${t.mesReAc}=='4' ? ${t.conCalReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tCCGG"
+												th:text="${t.mesReAc}=='5' ? ${t.conCalReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tCCGG"
+												th:text="${t.mesReAc}=='6' ? ${t.conCalReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tCCGG"
+												th:text="${t.mesReAc}=='7' ? ${t.conCalReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tCCGG"
+												th:text="${t.mesReAc}=='8' ? ${t.conCalReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tCCGG"
+												th:text="${t.mesReAc}=='9' ? ${t.conCalReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tCCGG"
+												th:text="${t.mesReAc}=='10' ? ${t.conCalReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tCCGG"
+												th:text="${t.mesReAc}=='11' ? ${t.conCalReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tCCGG"
+												th:text="${t.mesReAc}=='12' ? ${t.conCalReAC} : ''"></span></td>
+												<td><span id="tConCCGG"></span> </td>
+
+										</tr>
+										<tr>
+											<td><b> MUESTRAS DERIVADAS AL LAB. DE REFERENCIAL -
+													INS</b></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tMDR"
+												th:text="${t.mesReAc}=='1' ? ${t.mueDerReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tMDR"
+												th:text="${t.mesReAc}=='2' ? ${t.mueDerReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tMDR"
+												th:text="${t.mesReAc}=='3' ? ${t.mueDerReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tMDR"
+												th:text="${t.mesReAc}=='4' ? ${t.mueDerReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tMDR"
+												th:text="${t.mesReAc}=='5' ? ${t.mueDerReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tMDR"
+												th:text="${t.mesReAc}=='6' ? ${t.mueDerReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tMDR"
+												th:text="${t.mesReAc}=='7' ? ${t.mueDerReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tMDR"
+												th:text="${t.mesReAc}=='8' ? ${t.mueDerReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tMDR"
+												th:text="${t.mesReAc}=='9' ? ${t.mueDerReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tMDR"
+												th:text="${t.mesReAc}=='10' ? ${t.mueDerReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tMDR"
+												th:text="${t.mesReAc}=='11' ? ${t.mueDerReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tMDR"
+												th:text="${t.mesReAc}=='12' ? ${t.mueDerReAc} : ''"></span></td>
+												<td><span id="tConMDR"></span> </td>
+
+										</tr>
+										<tr>
+											<td><b> TOMAS DE MUESTRAS , PRUEBAS DE DX COVID 19</b></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTMPC"
+												th:text="${t.mesReAc}=='1' ? ${t.tomPruReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTMPC"
+												th:text="${t.mesReAc}=='2' ? ${t.tomPruReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTMPC"
+												th:text="${t.mesReAc}=='3' ? ${t.tomPruReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTMPC"
+												th:text="${t.mesReAc}=='4' ? ${t.tomPruReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTMPC"
+												th:text="${t.mesReAc}=='5' ? ${t.tomPruReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTMPC"
+												th:text="${t.mesReAc}=='6' ? ${t.tomPruReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTMPC"
+												th:text="${t.mesReAc}=='7' ? ${t.tomPruReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTMPC"
+												th:text="${t.mesReAc}=='8' ? ${t.tomPruReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTMPC"
+												th:text="${t.mesReAc}=='9' ? ${t.tomPruReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTMPC"
+												th:text="${t.mesReAc}=='10' ? ${t.tomPruReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTMPC"
+												th:text="${t.mesReAc}=='11' ? ${t.tomPruReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTMPC"
+												th:text="${t.mesReAc}=='12' ? ${t.tomPruReAc} : ''"></span></td>
+												<td><span id="tConTMPC"></span> </td>
+
+										</tr>
+										<tr>
+											<td><b> INGRESO DE DATOS AL SISTEMA SISCOVID 19</b></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tIDSC"
+												th:text="${t.mesReAc}=='1' ? ${t.ingDatReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tIDSC"
+												th:text="${t.mesReAc}=='2' ? ${t.ingDatReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tIDSC"
+												th:text="${t.mesReAc}=='3' ? ${t.ingDatReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tIDSC"
+												th:text="${t.mesReAc}=='4' ? ${t.ingDatReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tIDSC"
+												th:text="${t.mesReAc}=='5' ? ${t.ingDatReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tIDSC"
+												th:text="${t.mesReAc}=='6' ? ${t.ingDatReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tIDSC"
+												th:text="${t.mesReAc}=='7' ? ${t.ingDatReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tIDSC"
+												th:text="${t.mesReAc}=='8' ? ${t.ingDatReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tIDSC"
+												th:text="${t.mesReAc}=='9' ? ${t.ingDatReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tIDSC"
+												th:text="${t.mesReAc}=='10' ? ${t.ingDatReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tIDSC"
+												th:text="${t.mesReAc}=='11' ? ${t.ingDatReAc} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tIDSC"
+												th:text="${t.mesReAc}=='12' ? ${t.ingDatReAc} : ''"></span></td>
+												<td><span id="tConIDSC"></span> </td>
+
+										</tr>
+									</tbody>
+									<tfoot style="font-weight: bold;">
+										<tr>
+											<td><b>TOTAL</b></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTAL"
+												th:text="${t.mesReAc}=='1' ? ${t.totReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTAL"
+												th:text="${t.mesReAc}=='2' ? ${t.totReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTAL"
+												th:text="${t.mesReAc}=='3' ? ${t.totReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTAL"
+												th:text="${t.mesReAc}=='4' ? ${t.totReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTAL"
+												th:text="${t.mesReAc}=='5' ? ${t.totReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTAL"
+												th:text="${t.mesReAc}=='6' ? ${t.totReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTAL"
+												th:text="${t.mesReAc}=='7' ? ${t.totReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTAL"
+												th:text="${t.mesReAc}=='8' ? ${t.totReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTAL"
+												th:text="${t.mesReAc}=='9' ? ${t.totReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTAL"
+												th:text="${t.mesReAc}=='10' ? ${t.totReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTAL"
+												th:text="${t.mesReAc}=='11' ? ${t.totReAC} : ''"></span></td>
+											<td><span th:each="t: ${listaReTotAct}" class="tTAL"
+												th:text="${t.mesReAc}=='12' ? ${t.totReAC} : ''"></span></td>
+												<td><span id="tConTAL"></span> </td>
+
+										</tr>
+									</tfoot>
+
+								</table>
+								
+								<input type="button" class="btn btn-primary"
+										onclick="tableToExcel('testTable2', 'W3C Example Table')"
+										value="Export to Excel">
+								<table id="testTable2" style="font-size: 1.2em;"
+									class="table table-bordered table-hover table-striped table-sm dt-responsive nowrap"
+									cellspacing="0" width="100%">
+
+									<thead class="thead-light">
+										<tr>
+											<th th:text="${nomEstab}+' - ANALISIS CLINICOS PROCESADOS AÑO '+${anob}"></th>
+											<th>ENERO</th>
+											<th>FEBRERO</th>
+											<th>MARZO</th>
+											<th>ABRIL</th>
+											<th>MAYO</th>
+											<th>JUNIO</th>
+											<th>JULIO</th>
+											<th>AGOSTO</th>
+											<th>SETIEMBRE</th>
+											<th>OCTUBRE</th>
+											<th>NOVIEMBRE</th>
+											<th>DICIEMBRE</th>
+											<th>TOTAL</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><b>EXAMENES HEMATOLÓGICOS</b></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEH"
+												th:text="${t.exaMes}=='1' ? ${t.exaHematologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEH"
+												th:text="${t.exaMes}=='2' ? ${t.exaHematologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEH"
+												th:text="${t.exaMes}=='3' ? ${t.exaHematologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEH"
+												th:text="${t.exaMes}=='4' ? ${t.exaHematologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEH"
+												th:text="${t.exaMes}=='5' ? ${t.exaHematologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEH"
+												th:text="${t.exaMes}=='6' ? ${t.exaHematologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEH"
+												th:text="${t.exaMes}=='7' ? ${t.exaHematologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEH"
+												th:text="${t.exaMes}=='8' ? ${t.exaHematologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEH"
+												th:text="${t.exaMes}=='9' ? ${t.exaHematologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEH"
+												th:text="${t.exaMes}=='10' ? ${t.exaHematologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEH"
+												th:text="${t.exaMes}=='11' ? ${t.exaHematologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEH"
+												th:text="${t.exaMes}=='12' ? ${t.exaHematologia} : ''"></span></td>
+												<td><span id="tConEH"></span> </td>
+
+										</tr>
+										<tr>
+											<td><b>EXAMENES BIOQUÍMICOS</b></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEB"
+												th:text="${t.exaMes}=='1' ? ${t.exaBioquimica} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEB"
+												th:text="${t.exaMes}=='2' ? ${t.exaBioquimica} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEB"
+												th:text="${t.exaMes}=='3' ? ${t.exaBioquimica} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEB"
+												th:text="${t.exaMes}=='4' ? ${t.exaBioquimica} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEB"
+												th:text="${t.exaMes}=='5' ? ${t.exaBioquimica} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEB"
+												th:text="${t.exaMes}=='6' ? ${t.exaBioquimica} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEB"
+												th:text="${t.exaMes}=='7' ? ${t.exaBioquimica} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEB"
+												th:text="${t.exaMes}=='8' ? ${t.exaBioquimica} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEB"
+												th:text="${t.exaMes}=='9' ? ${t.exaBioquimica} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEB"
+												th:text="${t.exaMes}=='10' ? ${t.exaBioquimica} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEB"
+												th:text="${t.exaMes}=='11' ? ${t.exaBioquimica} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEB"
+												th:text="${t.exaMes}=='12' ? ${t.exaBioquimica} : ''"></span></td>
+												<td><span id="tConEB"></span> </td>
+
+										</tr>
+										<tr>
+											<td><b>EXAMENES INMUNOLÓGICOS</b></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEI"
+												th:text="${t.exaMes}=='1' ? ${t.exaInmunologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEI"
+												th:text="${t.exaMes}=='2' ? ${t.exaInmunologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEI"
+												th:text="${t.exaMes}=='3' ? ${t.exaInmunologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEI"
+												th:text="${t.exaMes}=='4' ? ${t.exaInmunologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEI"
+												th:text="${t.exaMes}=='5' ? ${t.exaInmunologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEI"
+												th:text="${t.exaMes}=='6' ? ${t.exaInmunologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEI"
+												th:text="${t.exaMes}=='7' ? ${t.exaInmunologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEI"
+												th:text="${t.exaMes}=='8' ? ${t.exaInmunologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEI"
+												th:text="${t.exaMes}=='9' ? ${t.exaInmunologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEI"
+												th:text="${t.exaMes}=='10' ? ${t.exaInmunologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEI"
+												th:text="${t.exaMes}=='11' ? ${t.exaInmunologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEI"
+												th:text="${t.exaMes}=='12' ? ${t.exaInmunologia} : ''"></span></td>
+												<td><span id="tConEI"></span> </td>
+
+										</tr>
+										<tr>
+											<td><b>EXAMENES MICROBIOLÓGICOS</b></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEM"
+												th:text="${t.exaMes}=='1' ? ${t.exaMicrobiologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEM"
+												th:text="${t.exaMes}=='2' ? ${t.exaMicrobiologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEM"
+												th:text="${t.exaMes}=='3' ? ${t.exaMicrobiologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEM"
+												th:text="${t.exaMes}=='4' ? ${t.exaMicrobiologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEM"
+												th:text="${t.exaMes}=='5' ? ${t.exaMicrobiologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEM"
+												th:text="${t.exaMes}=='6' ? ${t.exaMicrobiologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEM"
+												th:text="${t.exaMes}=='7' ? ${t.exaMicrobiologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEM"
+												th:text="${t.exaMes}=='8' ? ${t.exaMicrobiologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEM"
+												th:text="${t.exaMes}=='9' ? ${t.exaMicrobiologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEM"
+												th:text="${t.exaMes}=='10' ? ${t.exaMicrobiologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEM"
+												th:text="${t.exaMes}=='11' ? ${t.exaMicrobiologia} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tEM"
+												th:text="${t.exaMes}=='12' ? ${t.exaMicrobiologia} : ''"></span></td>
+												<td><span id="tConEM"></span> </td>
+
+										</tr>
+									</tbody>
+									<tfoot style="font-weight: bold;">
+										<tr>
+											<td><b>TOTAL</b></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tTE"
+												th:text="${t.exaMes}=='1' ? ${t.totSumExa} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tTE"
+												th:text="${t.exaMes}=='2' ? ${t.totSumExa} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tTE"
+												th:text="${t.exaMes}=='3' ? ${t.totSumExa} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tTE"
+												th:text="${t.exaMes}=='4' ? ${t.totSumExa} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tTE"
+												th:text="${t.exaMes}=='5' ? ${t.totSumExa} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tTE"
+												th:text="${t.exaMes}=='6' ? ${t.totSumExa} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tTE"
+												th:text="${t.exaMes}=='7' ? ${t.totSumExa} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tTE"
+												th:text="${t.exaMes}=='8' ? ${t.totSumExa} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tTE"
+												th:text="${t.exaMes}=='9' ? ${t.totSumExa} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tTE"
+												th:text="${t.exaMes}=='10' ? ${t.totSumExa} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tTE"
+												th:text="${t.exaMes}=='11' ? ${t.totSumExa} : ''"></span></td>
+											<td><span th:each="t: ${tablaAnalisisClinicos}" class="tTE"
+												th:text="${t.exaMes}=='12' ? ${t.totSumExa} : ''"></span></td>
+												<td><span id="tConTE"></span> </td>
+
+										</tr>
+									</tfoot>
+
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- row -->
+
+	<!-- Call to Action -->
+	<div th:include="etiquetas/footer.html" th:remove="tag"></div>
+</body>
+</html>

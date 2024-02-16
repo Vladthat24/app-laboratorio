@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../../img/favicon.ico"
+	type="image/x-icon">
+<head>
+
+<title>DIRIS LIMA SUR - EDITAR INMUNOLOGIA</title>
+
+<!--JQUERY-->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+<link rel="stylesheet" type="text/css"
+	href="static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+
+<!-- Los iconos tipo Solid de Fontawesome-->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+<!-- Nuestro css-->
+<link rel="stylesheet" type="text/css" href="static/css/user-form.css"
+	th:href="@{/css/user-form.css}">
+<!-- DATA TABLE -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+
+
+
+<style type="text/css">
+.form-control {
+	font-size: 12px;
+}
+
+.radioB {
+	font-family: system-ui, sans-serif;
+	font-size: 1rem;
+	font-weight: bold;
+	line-height: 1.1;
+	display: grid;
+	grid-template-columns: 1em auto;
+	gap: 0.5em;
+	font-weight: bold;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="static/css/navbar.css"
+	th:href="@{/css/navbar.css}">
+
+<script type="text/javascript">
+	function sumar() {
+
+		var total = 0;
+
+		$(".monto").each(function() {
+			if (isNaN(parseFloat($(this).val()))) {
+				total += 0;
+			} else {
+				total += parseFloat($(this).val());
+				console.log(total);
+			}
+		});
+		document.getElementById('totalInm').value = total;
+	}
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var n = (new Date()).getFullYear()
+
+		var select = document.getElementById("ano");
+		for (var i = n; i >= 2022; i--)
+			select.options.add(new Option(i, i));
+
+		function obtenerNombreMes(numero) {
+			var today = new Date();
+			let miFecha = new Date(today.getFullYear(), today.getMonth(), 0);
+			if (0 < numero && numero <= 12) {
+				miFecha.setMonth(numero - 1);
+				return new Intl.DateTimeFormat('es-PE', {
+					month : 'long'
+				}).format(miFecha);
+			} else {
+				return null;
+			}
+
+		}
+
+	})
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		setTimeout(function() {
+			$('#success-alert').hide('slow');
+		}, 3000); // <-- time in milliseconds
+	})
+</script>
+
+</head>
+<body>
+
+	<div th:include="etiquetas/header.html" th:remove="tag"></div>
+	<div class="container" style="max-width: 70%;">
+		<div class="mx-auto col-sm-12 main-section" id="myTab" role="tablist">
+
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="list" role="tabpanel"
+					aria-labelledby="list-tab">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="text-center">EDITAR INMUNOLOGÍA</h4>
+
+						</div>
+
+						<div class="card-body">
+							<div class="table-responsive">
+								<div class="col-sm-12 col-md-12 col-lg-12 text-center mt-5 mb-5"
+									id="contenedor">
+
+									<div id="success-alert"
+										th:classappend="'alert-'+ (${clase != null} ? ${clase} : info)"
+										th:if="${mensaje != null}" th:text="${mensaje}" class="alert"></div>
+
+									<form action="#" th:action="@{/editarInmunologia}"
+										style="font-size: 12px;" th:object="${inmunologia}"
+										class="form" method="post">
+										<input id="idInmunologia" th:field="*{idInmunologia}"
+											name="idInmunologia" onkeyup="sumar();" type="hidden"
+											class="form-control">
+
+										<div class="form-group row">
+
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> AÑO </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<select name="anoInm" id="ano" class="form-control"><option
+																th:value="${inmunologia.anoInm}"
+																th:text="${inmunologia.anoInm}"></select>
+													</div>
+												</div>
+
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> MES </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<select name="mesInm" id="mesInm" class="form-control"
+															th:field="*{mesInm}" style="text-transform: uppercase;"
+															onkeyup="javascript:this.value=this.value.toUpperCase();">
+															<option value="1">Enero</option>
+															<option value="2">Febrero</option>
+															<option value="3">Marzo</option>
+															<option value="4">Abril</option>
+															<option value="5">Mayo</option>
+															<option value="6">Junio</option>
+															<option value="7">Julio</option>
+															<option value="8">Agosto</option>
+															<option value="9">Septiembre</option>
+															<option value="10">Octubre</option>
+															<option value="11">Noviembre</option>
+															<option value="12">Diciembre</option>
+
+														</select>
+													</div>
+												</div>
+
+											</div>
+
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> IDENTIF. AC. TÍFICO H (AGLUTINACIONES) </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" id="identifAcTificoH"
+															th:field="*{identifAcTificoH}" name="identifAcTificoH"
+															onkeyup="sumar();" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> IDENTIF. AC. TÍFICO O (AGLUTINACIONES) </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" id="identifAcTificoO"
+															th:field="*{identifAcTificoO}" name="identifAcTificoO"
+															onkeyup="sumar();" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> IDENTIF. AC. PARATÍFICO A (AGLUTINACIONES)
+														</label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="identifAcParatificoA" name="identifAcParatificoA"
+															th:field="*{identifAcParatificoA}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> IDENTIF. AC. PARATÍFICO B (AGLUTINACIONES)
+														</label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0"
+															th:field="*{identifAcParatificoB}"
+															id="identifAcParatificoB" onkeyup="sumar();"
+															name="identifAcParatificoB" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> IDENTIF. AC. BRUCELLA (AGLUTINACIONES) </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="identifAcBrucella" name="identifAcBrucella"
+															th:field="*{identifAcBrucella}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> TEST DE ROSA DE BENGALA - BRUCELLA </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="testRosaBengalaBrucella"
+															th:field="*{testRosaBengalaBrucella}"
+															name="testRosaBengalaBrucella" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> IDENTIFICACION DE AC HIV -PRUEBA RÁPIDA </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="identificacionAcHivPruebaRapida"
+															th:field="*{identificacionAcHivPruebaRapida}"
+															name="identificacionAcHivPruebaRapida" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> IDENTIFICACION DE AC HIV -ELISA </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0"
+															th:field="*{identificacionAcHivElisa}"
+															id="identificacionAcHivElisa" onkeyup="sumar();"
+															name="identificacionAcHivElisa" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> TEST DE RPR </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="testRpr" name="testRpr" type="number"
+															th:field="*{testRpr}" class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> TEST DE PROTEINA C REACTIVA LATEX </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0"
+															id="testProteinaCReactivaLatex" onkeyup="sumar();"
+															th:field="*{testProteinaCReactivaLatex}"
+															name="testProteinaCReactivaLatex" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> DOSAJE DE HORMONA SUB UNIDAD BETA HCG </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="dosajeHormonaSubUnidadBetaHcg"
+															th:field="*{dosajeHormonaSubUnidadBetaHcg}"
+															name="dosajeHormonaSubUnidadBetaHcg" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> TEST DE FACTOR REUMATOIDE </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0"
+															id="testFactorReumatoide" onkeyup="sumar();"
+															th:field="*{testFactorReumatoide}"
+															name="testFactorReumatoide" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> TEST ANTÍGENO PROSTÁTICO ESPECÍFICO PSA </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0"
+															id="testAntigenoProstaticoEspecíficoPsa"
+															onkeyup="sumar();"
+															th:field="*{testAntigenoProstaticoEspecíficoPsa}"
+															name="testAntigenoProstaticoEspecíficoPsa" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> TEST DE ANTIESTREPTOLISINA "O" ASO </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="testAntiestreptolisinaOAso"
+															th:field="*{testAntiestreptolisinaOAso}"
+															name="testAntiestreptolisinaOAso" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> HELICOBACTER PILORY, PRUEBA RAPIDA</label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="helicobacterPiloryElisaIgm"
+															th:field="*{helicobacterPiloryElisaIgm}"
+															name="helicobacterPiloryElisaIgm" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> TEST DE ROTAVIRUS </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															th:field="*{testRotavirus}" id="testRotavirus"
+															name="testRotavirus" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PRUEBA RÁPIDA PARA HEPATITIS A </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+														th:field="*{pruebaHepatitisA}"
+															id="pruebaHepatitisA" name="pruebaHepatitisA"
+															type="number" class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> HEPATITIS B AC CONTRA AG SUPERFICIE </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="hepatitisBAcContraAgSuperficie"
+															th:field="*{hepatitisBAcContraAgSuperficie}"
+															name="hepatitisBAcContraAgSuperficie" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PRUEBA RÁPIDA PARA HEPATITIS C </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="pruebaHepatitisC" name="pruebaHepatitisC"
+															th:field="*{pruebaHepatitisC}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> CARGA VIRAL PARA HIV </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="cargaViralHiv" name="cargaViralHiv" type="number"
+															th:field="*{cargaViralHiv}" class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> ELISA PARA HIV </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="elisaHiv" name="elisaHiv" type="number"
+															th:field="*{elisaHiv}" class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> TEST DE EMBARAZO PR (ORINA)</label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															th:field="*{testEmbarazoPr}" id="testEmbarazoPr"
+															name="testEmbarazoPr" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PRUEBAS DUAL PARA HIV Y SIFILIS </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="pruebaDualHivSifilis" name="pruebaDualHivSifilis"
+															th:field="*{pruebaDualHivSifilis}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PRUEBAS RAPIDAS SIFILIS </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="pruebaRapidaSifilis" name="pruebaRapidaSifilis"
+															th:field="*{pruebaRapidaSifilis}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PERFIL TIROIDEO: T3 LIBRE </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="perfilTiroT3Libre" name="perfilTiroT3Libre"
+															th:field="*{perfilTiroT3Libre}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PERFIL TIROIDEO: T4 LIBRE </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="perfilTiroT4Libre" name="perfilTiroT4Libre"
+															th:field="*{perfilTiroT4Libre}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PERFIL TIROIDEO: TSH </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="perfilTiroTsh" name="perfilTiroTsh"
+															th:field="*{perfilTiroTsh}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PERFIL HORMONAL: LH </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="perfilHorLh" name="perfilHorLh"
+															th:field="*{perfilHorLh}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PERFIL HORMONAL: FSH </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="perfilHorFsh" name="perfilHorFsh"
+															th:field="*{perfilHorFsh}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PERFIL HORMONAL: ESTRADIOL </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="perfilHorEstradiol" name="perfilHorEstradiol"
+															th:field="*{perfilHorEstradiol}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PERFIL HORMONAL: TESTOSTERONA </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="perfilHorTestosterona" name="perfilHorTestosterona"
+															th:field="*{perfilHorTestosterona}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PERFIL CARDIACO: CK-MB </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="perfilCarCkMb" name="perfilCarCkMb"
+															th:field="*{perfilCarCkMb}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PERFIL CARDIACO: DIMERO D </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="perfilCarDimeroD" name="perfilCarDimeroD"
+															th:field="*{perfilCarDimeroD}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PERFIL CARDIACO: TROPONIMA I </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="perfilCarTroponinI" name="perfilCarTroponinI"
+															th:field="*{perfilCarTroponinI}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PERFIL CARDIACO: NT - PROBNP </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="perfilCarNtProbnp" name="perfilCarNtProbnp"
+															th:field="*{perfilCarNtProbnp}" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> TOTAL </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" readonly="readonly"
+															id="totalInm" name="totalInm" type="number"
+															th:field="*{totalInm}" class="form-control">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> ESTADO </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<select id="estadoInm" name="estadoInm"
+															th:field="*{estadoInm}" class="form-control">
+															<option th:each="e : ${estado}" th:text="${e.descEstado}"
+																th:value="${e.idEstado}">
+														</select>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-sm-12 col-md-12 col-lg-12">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-12">
+														<button type="submit" id="show" data-toggle="modal"
+															class="btn btn-primary" data-target="#saludo"
+															th:text="GRABAR"></button>
+													</div>
+
+												</div>
+											</div>
+										</div>
+
+									</form>
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!-- row -->
+
+	<!-- Call to Action -->
+	<div th:include="etiquetas/footer.html" th:remove="tag"></div>
+</body>
+</html>
