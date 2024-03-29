@@ -70,6 +70,7 @@ public class InmunologiaServiceImpl implements InmunologiaService{
 		in.setCargaViralHiv(i.getCargaViralHiv());
 		in.setElisaHiv(i.getElisaHiv());
 		in.setPruebaHepatitisA(i.getPruebaHepatitisA());
+		in.setOtras_pruebas(i.getOtras_pruebas());
 		
 		ir.save(in);
 		
@@ -139,6 +140,7 @@ public class InmunologiaServiceImpl implements InmunologiaService{
 		in.setCargaViralHiv(i.getCargaViralHiv());
 		in.setElisaHiv(i.getElisaHiv());
 		in.setPruebaHepatitisA(i.getPruebaHepatitisA());
+		in.setOtras_pruebas(i.getOtras_pruebas());
 		
 		ir.save(in);
 		

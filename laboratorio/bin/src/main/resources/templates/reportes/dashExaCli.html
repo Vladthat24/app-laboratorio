@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../../../img/favicon.ico"
+	type="image/x-icon">
+<head>
+
+<title>DIRIS LIMA SUR - Respultados de Laboratorio</title>
+
+<!--JQUERY-->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+<link rel="stylesheet" type="text/css"
+	href="static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+
+<!-- Los iconos tipo Solid de Fontawesome-->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+<!-- Nuestro css-->
+<link rel="stylesheet" type="text/css" href="static/css/user-form.css"
+	th:href="@{/css/user-form.css}">
+<!-- DATA TABLE -->
+<script
+	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script
+	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+
+<script
+	src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
+<!-- SUM()  Datatables-->
+<script src="https://cdn.datatables.net/plug-ins/1.10.20/api/sum().js"></script>
+
+<script
+	src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+<script
+	src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+
+<style type="text/css">
+.table, form {
+	font-size: 12px;
+}
+
+input {
+	color: grey;
+}
+
+input[required] {
+	border-color: blue;
+	box-shadow: 0px 0px 5px blue;
+}
+
+input:invalid {
+	border-color: red;
+	box-shadow: 0px 0px 5px blue;
+}
+
+input:valid {
+	border-color: green;
+	box-shadow: 0px 0px 5px green;
+}
+
+select[required] {
+	border-color: blue;
+	box-shadow: 0px 0px 5px blue;
+}
+
+select:invalid {
+	border-color: red;
+	box-shadow: 0px 0px 5px blue;
+}
+
+select:valid {
+	border-color: green;
+	box-shadow: 0px 0px 5px green;
+}
+</style>
+<style type="text/css">
+.form-control {
+	font-size: 12px;
+}
+</style>
+
+<script type="text/javascript" th:src="@{/js/highcharts.js}"></script>
+<script type="text/javascript" th:src="@{/js/modules.serires.js}"></script>
+<script type="text/javascript" th:src="@{/js/exporting.js}"></script>
+<script type="text/javascript" th:src="@{/js/export-data.js}"></script>
+<script type="text/javascript" th:src="@{/js/data.js}"></script>
+<script type="text/javascript" th:src="@{/js/accessibility.js}"></script>
+<script type="text/javascript" th:src="@{/js/variable-pie.js}"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="static/css/highcharts22.css" th:href="@{/css/highcharts22.css}">
+
+<style>
+.highcharts-series-label {
+	opacity: 0;
+}
+
+.highcharts-credits {
+	opacity: 0;
+}
+</style>
+
+<script type="text/javascript">
+	function reporteDashboard() {
+
+		var ano = $('#ano').val();
+		var mes = $('#mes').val();
+		var ris = $('#ris').val();
+		var mes2 = $('#mes2').val();
+		reporteResultadoEstablecimiento(ano, mes, ris,mes2);
+		reporteActividadesEstablecimiento(ano, mes, ris,mes2);
+	}
+</script>
+
+<script type="text/javascript">
+	function reporteResultadoEstablecimiento(ano1, mes1, ris1, mes2) {
+		$.ajax({
+			url : "reporteBioquimica?ano=" + ano1 + "&mes=" + mes1 + "&ris="
+					+ ris1 + "&mes2=" + mes2,
+			success : function(result) {
+				var yearDtls = [];
+				var countDtls = [];
+
+				Object.keys(result).forEach(function(key) {
+					yearDtls.push(key);
+					countDtls.push(result[key]);
+
+				});
+				drawChartEstable(yearDtls, countDtls);
+			}
+		});
+
+		function drawChartEstable(year, viewCounts) {
+
+			$
+					.ajax({
+						url : "reporteHematologia?ano=" + ano1 + "&mes=" + mes1
+								+ "&ris=" + ris1+ "&mes2="+mes2,
+						success : function(result) {
+							var yearDtls = [];
+							var countDtls = [];
+
+							Object.keys(result).forEach(function(key) {
+								yearDtls.push(key);
+								countDtls.push(result[key]);
+
+							});
+
+							$
+									.ajax({
+										url : "reporteInmunologia?ano=" + ano1
+												+ "&mes=" + mes1 + "&ris="
+												+ ris1+ "&mes2="+mes2,
+										success : function(result2) {
+											var yearDtls2 = [];
+											var countDtls2 = [];
+
+											Object
+													.keys(result2)
+													.forEach(
+															function(key2) {
+																yearDtls2
+																		.push(key2);
+																countDtls2
+																		.push(result2[key2]);
+
+															});
+
+											$
+													.ajax({
+														url : "reporteMicrobiologia?ano="
+																+ ano1
+																+ "&mes="
+																+ mes1
+																+ "&ris="
+																+ ris1+ "&mes2="+mes2,
+														success : function(
+																result3) {
+															var yearDtls3 = [];
+															var countDtls3 = [];
+
+															Object
+																	.keys(
+																			result3)
+																	.forEach(
+																			function(
+																					key3) {
+																				yearDtls3
+																						.push(key3);
+																				countDtls3
+																						.push(result3[key3]);
+
+																			});
+
+															var fechas = [];
+
+															for (var i = 0; i < viewCounts.length; i++) {
+
+																fechas
+																		.push(viewCounts[i][0]);
+
+															}
+
+															var sumat = [];
+
+															for (var i = 0; i < viewCounts.length; i++) {
+
+																var suma1 = parseFloat(viewCounts[i][1]);
+																var suma2 = parseFloat(countDtls[i][1]);
+																var suma3 = parseFloat(countDtls2[i][1]);
+																var suma4 = parseFloat(countDtls3[i][1]);
+																var tot = suma1
+																		+ suma2
+																		+ suma3
+																		+ suma4;
+
+																sumat.push(tot);
+
+															}
+															;
+
+															today = new Date();
+															h = today
+																	.getHours();
+															m = today
+																	.getMinutes();
+															s = today
+																	.getSeconds();
+															d = today.getDate();
+															mo = today
+																	.getMonth() + 1;
+															y = today
+																	.getFullYear();
+
+															fechaReporte = d
+																	+ "/" + mo
+																	+ "/" + y
+																	+ "  " + h
+																	+ ":" + m
+																	+ ":" + s;
+
+															Highcharts
+																	.chart(
+																			'container-barEstable',
+																			{
+																				chart : {
+
+																					type : 'column',
+																					styledMode : true
+																				},
+																				title : {
+																					text : '<b>Producción de Análisis Clínicos Realizados por Laboratorio</b>'
+																				},
+																				exporting : {
+																					sourceWidth : 600,
+																					filename: 'Producción de Análisis Clínicos Realizados '+fechaReporte+
+																					'<br>Fecha Busqueda desde: '+mes1+' hasta: '+mes2+' del año '+ano1,
+																					sourceHeight : 800,
+																					// scale: 2 (default)
+																					chartOptions : {
+																						subtitle : null
+																					}
+																				},
+																				xAxis : [ {
+																					title : {
+																						text : 'Establecimientos - Fecha Reporte: '+fechaReporte +
+																						'<br>Fecha Busqueda desde: '+mes1+' hasta: '+mes2+' del año '+ano1
+																					},
+																					categories : fechas
+																				} ],
+																				yAxis : [ {
+																					className : 'highcharts-color-0',
+																					title : {
+																						text : 'Cantidad de Análisis'
+																					}
+																				} ],
+																				tooltip : {
+
+																					crosshairs : true,
+																					shared : true
+
+																				},
+																				plotOptions : {
+																					turboThreshold : 5000,
+																					spline : {
+																						dataLabels : {
+																							enabled : true,
+																							borderRadius : 5,
+																							backgroundColor : 'rgba(51, 153, 102)',
+																							borderColor : 'rgba(51, 153, 102)',
+																						}
+																					},
+
+																					series : {
+																						borderWidth : 0,
+																						dataLabels : {
+																							enabled : true,
+																							format : '<br><b style="font-size: 1em;">{point.y}</b>',
+																							allowOverlap : true,
+																						},
+
+																					}
+																				},
+																				series : [
+																						{
+																							name : 'Exámenes Hematología',
+																							type : 'column',
+																							data : countDtls,
+																						},
+																						{
+																							name : 'Exámenes Bioquimica',
+																							type : 'column',
+																							data : viewCounts,
+																						},
+
+																						{
+																							name : 'Exámenes Inmunología',
+																							type : 'column',
+																							data : countDtls2
+																						},
+																						{
+																							name : 'Exámenes Microbiología',
+																							type : 'column',
+																							data : countDtls3
+																						},
+																						{
+																							name : 'Total Análisis Clínicos',
+																							data : sumat,
+																							type : 'spline',
+																							pointPadding : 0.02,
+
+																						}, ]
+																			});
+														}
+													});
+										}
+									});
+						}
+					});
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	function reporteActividadesEstablecimiento(ano1, mes1, ris1, mes2) {
+		$.ajax({
+			url : "reporteAnalisisTotal?ano=" + ano1 + "&mes=" + mes1 + "&ris="
+					+ ris1 + "&mes2=" + mes2,
+			success : function(result) {
+				var yearDtls = [];
+				var countDtls = [];
+
+				Object.keys(result).forEach(function(key) {
+					yearDtls.push(key);
+					countDtls.push(result[key]);
+
+				});
+				drawChartEstable(yearDtls, countDtls);
+			}
+		});
+
+		function drawChartEstable(year, viewCounts) {
+
+			$
+					.ajax({
+						url : "reporteMuestrasDeribadas?ano=" + ano1 + "&mes="
+								+ mes1 + "&ris=" + ris1 + "&mes2="+mes2,
+						success : function(result) {
+							var yearDtls = [];
+							var countDtls = [];
+
+							Object.keys(result).forEach(function(key) {
+								yearDtls.push(key);
+								countDtls.push(result[key]);
+
+							});
+
+							$
+									.ajax({
+										url : "reporteTomaMuestrasCovid19?ano="
+												+ ano1 + "&mes=" + mes1
+												+ "&ris=" + ris1+"&mes2="+mes2,
+										success : function(result2) {
+											var yearDtls2 = [];
+											var countDtls2 = [];
+
+											Object
+													.keys(result2)
+													.forEach(
+															function(key2) {
+																yearDtls2
+																		.push(key2);
+																countDtls2
+																		.push(result2[key2]);
+
+															});
+
+											$
+													.ajax({
+														url : "reporteRegistroSisCovid19?ano="
+																+ ano1
+																+ "&mes="
+																+ mes1
+																+ "&ris="
+																+ ris1+"&mes2="+mes2,
+														success : function(
+																result3) {
+															var yearDtls3 = [];
+															var countDtls3 = [];
+
+															Object
+																	.keys(
+																			result3)
+																	.forEach(
+																			function(
+																					key3) {
+																				yearDtls3
+																						.push(key3);
+																				countDtls3
+																						.push(result3[key3]);
+
+																			});
+
+															$
+																	.ajax({
+																		url : "reporteControlCalidad?ano="
+																				+ ano1
+																				+ "&mes="
+																				+ mes1
+																				+ "&ris="
+																				+ ris1+"&mes2="+mes2,
+																		success : function(
+																				result4) {
+																			var yearDtls4 = [];
+																			var countDtls4 = [];
+
+																			Object
+																					.keys(
+																							result4)
+																					.forEach(
+																							function(
+																									key4) {
+																								yearDtls4
+																										.push(key4);
+																								countDtls4
+																										.push(result4[key4]);
+
+																							});
+
+																			var fechas = [];
+
+																			for (var i = 0; i < viewCounts.length; i++) {
+
+																				fechas
+																						.push(viewCounts[i][0]);
+
+																			}
+																			;
+
+																			var sumat = [];
+
+																			for (var i = 0; i < viewCounts.length; i++) {
+
+																				var suma1 = parseFloat(viewCounts[i][1]);
+																				var suma2 = parseFloat(countDtls[i][1]);
+																				var suma3 = parseFloat(countDtls2[i][1]);
+																				var suma4 = parseFloat(countDtls3[i][1]);
+																				var suma5 = parseFloat(countDtls4[i][1]);
+																				var tot = suma1
+																						+ suma2
+																						+ suma3
+																						+ suma4
+																						+ suma5;
+
+																				sumat
+																						.push(tot);
+
+																			}
+																			;
+																			
+																			fechaReporte = d
+																			+ "/" + mo
+																			+ "/" + y
+																			+ "  " + h
+																			+ ":" + m
+																			+ ":" + s;
+
+																			Highcharts
+																					.chart(
+																							'container-barEstableAcptividades',
+																							{
+																								chart : {
+
+																									type : 'column',
+																									styledMode : true
+																								},
+																								title : {
+																									text : '<b>Producción de Actividades Realizadas en los Laboratorios</b>'
+																								},
+																								exporting : {
+																									sourceWidth : 600,
+																									filename: 'Producción de Actividades Realizadas '+fechaReporte+
+																									'<br>Fecha Busqueda desde: '+mes1+' hasta: '+mes2+' del año '+ano1,
+																									sourceHeight : 800,
+																									// scale: 2 (default)
+																									chartOptions : {
+																										subtitle : null
+																									}
+																								},
+																								xAxis : [ {
+																									title : {
+																										text : 'Establecimientos - Fecha Reporte: '+fechaReporte +
+																										'<br>Fecha Busqueda desde: '+mes1+' hasta: '+mes2+' del año '+ano1
+																									},
+																									categories : fechas
+																								} ],
+																								yAxis : [ {
+																									className : 'highcharts-color-0',
+																									title : {
+																										text : 'Cantidad de Acitvidades'
+																									}
+																								} ],
+																								tooltip : {
+
+																									crosshairs : true,
+																									shared : true
+
+																								},
+																								plotOptions : {
+																									turboThreshold : 5000,
+
+																									series : {
+																										borderWidth : 0,
+																										dataLabels : {
+																											enabled : true,
+																											format : '<br><b style="font-size: 1em;">{point.y}</b>',
+																											allowOverlap : true,
+																										},
+
+																									},
+																									spline : {
+																										dataLabels : {
+																											enabled : true,
+																											borderRadius : 5,
+																											backgroundColor : 'rgba(51, 153, 102)',
+																											borderColor : 'rgba(51, 153, 102)',
+																										}
+																									}
+																								},
+																								series : [
+																										{
+																											name : 'Consolidado de Análisis Clínicos Procesados',
+																											data : viewCounts,
+																											type : 'column',
+																											pointPadding : 0.02
+																										},
+																										{
+																											name : 'Control de Calidad BK y Gota Gruesa',
+																											data : countDtls4,
+																											type : 'column',
+																											pointPadding : 0.02
+																										},
+																										{
+																											name : 'Muestras Derivadas al Laboratorio Referencial -INS',
+																											data : countDtls,
+																											type : 'column',
+																											pointPadding : 0.02
+																										},
+																										{
+																											name : 'Tomas de Muestras, Pruebas DX COVID 19',
+																											data : countDtls2,
+																											type : 'column',
+																											pointPadding : 0.02
+																										},
+																										{
+																											name : 'Ingreso de Datos al SISCOVID19',
+																											data : countDtls3,
+																											type : 'column',
+																											pointPadding : 0.02
+																										},
+																										{
+																											name : 'Total Actividades',
+																											data : sumat,
+																											type : 'spline',
+																											pointPadding : 0.02,
+
+																										}, ]
+																							});
+																		}
+																	});
+														}
+													});
+										}
+									});
+						}
+					});
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var n = (new Date()).getFullYear()
+
+		var select = document.getElementById("ano");
+		for (var i = n; i >= 2022; i--)
+			select.options.add(new Option(i, i));
+
+	})
+</script>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="static/css/navbar.css"
+	th:href="@{/css/navbar.css}">
+
+</head>
+<body>
+	<div th:include="etiquetas/header.html" th:remove="tag"></div>
+
+
+	<div class="container" style="max-width: 100%;">
+		<div class="mx-auto col-sm-12 main-section" id="myTab" role="tablist">
+
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="list" role="tabpanel"
+					aria-labelledby="list-tab">
+					<div class="card">
+						<div class="card-header">
+
+
+							<form action="#" class="form" method="post">
+								<div class="form-group row">
+									<h4>Dashboard de Laboratorio</h4>
+									<div class="col-2">
+										<select name="ano" id="ano" class="form-control"></select>
+									</div>
+									<div class="col-2">
+										<select name="mes" id="mes" style="text-transform: uppercase;"
+											onkeyup="javascript:this.value=this.value.toUpperCase();"
+											class="form-control">
+											<option value="">Mes Inicio</option>
+											<option value="01">Enero</option>
+											<option value="02">Febrero</option>
+											<option value="03">Marzo</option>
+											<option value="04">Abril</option>
+											<option value="05">Mayo</option>
+											<option value="06">Junio</option>
+											<option value="07">Julio</option>
+											<option value="08">Agosto</option>
+											<option value="09">Septiembre</option>
+											<option value="10">Octubre</option>
+											<option value="11">Noviembre</option>
+											<option value="12">Diciembre</option>
+										</select>
+									</div>
+									<div class="col-2">
+										<select name="mes2" id="mes2" style="text-transform: uppercase;"
+											onkeyup="javascript:this.value=this.value.toUpperCase();"
+											class="form-control">
+											<option value="">Mes Fin</option>
+											<option value="01">Enero</option>
+											<option value="02">Febrero</option>
+											<option value="03">Marzo</option>
+											<option value="04">Abril</option>
+											<option value="05">Mayo</option>
+											<option value="06">Junio</option>
+											<option value="07">Julio</option>
+											<option value="08">Agosto</option>
+											<option value="09">Septiembre</option>
+											<option value="10">Octubre</option>
+											<option value="11">Noviembre</option>
+											<option value="12">Diciembre</option>
+										</select>
+									</div>
+									<div class="col-2">
+										<select name="ris" id="ris" class="form-control"
+											th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR'')')} or
+												${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+											<option value="">Seleccione un RIS</option>
+											<option th:each="r : ${listaRis}" th:value="${r.codRis}"
+												class="opcion" th:text="${r.descripcionRis}">
+										</select> <select name="ris" id="ris" class="form-control"
+											th:each="user: ${userList}"
+											th:if="${#authentication.getPrincipal().getUsername() == user.username} and 
+										${#authorization.expression('hasRole(''ROLE_USER'')')}">
+											<option th:value="${user.establecimiento.ris.codRis}"
+												class="opcion"
+												th:text="${user.establecimiento.ris.descripcionRis}">
+										</select>
+									</div>
+									<div class="col-2">
+
+										<input type="button" onclick="reporteDashboard()"
+											class="btn btn-secondary" value="Buscar">
+
+									</div>
+								</div>
+							</form>
+
+						</div>
+
+						<div class="card-body">
+							<div class="form-group row">
+								<div class="col-sm-12 col-md-12 col-lg-12 "
+									id="container-barEstable" style="height: 600px !important"></div>
+								<div class="col-sm-12 col-md-12 col-lg-12 "
+									id="container-barEstableAcptividades"
+									style="height: 600px !important"></div>
+								<div class="col-sm-12 col-md-12 col-lg-6 "
+									id="container-barFecha"></div>
+								<div class="col-sm-12 col-md-12 col-lg-6 " id="container-barRis"></div>
+								<div class="col-sm-12 col-md-12 col-lg-6 "
+									id="container-barEdad"></div>
+								<div class="col-sm-12 col-md-12 col-lg-6 "
+									id="container-barSexo"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- row -->
+
+	<!-- Call to Action -->
+	<div th:include="etiquetas/footer.html" th:remove="tag"></div>
+</body>
+</html>

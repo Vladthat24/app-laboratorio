@@ -1,0 +1,177 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<div
+	th:with="disableFields=!${editMode} and ${#authorization.expression('hasRole(''ROLE_USER'')')}">
+	<script type="text/javascript">
+function ordenarSelectC()
+{
+  var selectToSort = jQuery('#centro_asis-filter');
+  var optionActual = selectToSort.val();
+  selectToSort.html(selectToSort.children('option').sort(function (a, b) {
+    return a.text === b.text ? 0 : a.text < b.text ? -1 : 1;
+  })).val(optionActual);
+}
+$(document).ready(function () {
+  ordenarSelectC('centro_asis-filter');
+});
+
+</script>
+	<form class="form" role="form" autocomplete="off"
+		th:object="${userForm}"
+		th:action="${signup} ?@{/signup}:(${editMode} ?@{/editUser} :@{/userForm})"
+		method="post">
+
+		<!--Es necesario para poder pasar la validacion del Model-->
+		<input class="form-control" type=hidden th:field="${userForm.id}"
+			th:if="${editMode}"> <input class="form-control" type=hidden
+			name="password" value="xxxx" th:if="${editMode}">
+
+
+
+		<div class="form-group row">
+			<label class="col-lg-3 col-form-label form-control-label">Nombres</label>
+			<div class="col-lg-9">
+				<input class="form-control" type="text"
+					th:field="${userForm.firstName}" th:disabled="${disableFields}"
+					style="text-transform: uppercase;"
+					onkeyup="javascript:this.value=this.value.toUpperCase();">
+				<div class="alert-danger" th:if="${#fields.hasErrors('firstName')}"
+					th:errors="*{firstName}">Name Error</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-lg-3 col-form-label form-control-label">Apellidos</label>
+			<div class="col-lg-9">
+				<input class="form-control" type="text"
+					th:field="${userForm.lastName}" th:disabled="${disableFields}"
+					style="text-transform: uppercase;"
+					onkeyup="javascript:this.value=this.value.toUpperCase();">
+				<div class="alert-danger" th:if="${#fields.hasErrors('lastName')}"
+					th:errors="*{lastName}">Name Error</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-lg-3 col-form-label form-control-label">Email</label>
+			<div class="col-lg-9">
+				<input class="form-control" type="email"
+					th:field="${userForm.email}" th:disabled="${disableFields}">
+				<div class="alert-danger" th:if="${#fields.hasErrors('email')}"
+					th:errors="*{email}">Name Error</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-lg-3 col-form-label form-control-label"
+			th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Username</label>
+			<div class="col-lg-9">
+				<input class="form-control" type="text" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+					th:field="${userForm.username}" th:disabled="${disableFields}">
+				<input class="form-control" type="hidden" th:unless="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+					th:field="${userForm.username}" th:disabled="${disableFields}">
+				<div class="alert-danger" th:if="${#fields.hasErrors('username')}"
+					th:errors="*{username}">Name Error</div>
+			</div>
+			
+		</div>
+		<div class="form-group row">
+			<label th:text="Establecimiento" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+				class="col-lg-3 col-form-label form-control-label"></label>
+			<div class="col-lg-9">
+				<select th:field="${userForm.establecimiento}" class="form-control"
+				th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+					id="centro_asis-filter" th:disabled="${disableFields}">
+					<option value=""></option>
+					<option th:each="centro_asis :${centro_asis}" th:if="${centro_asis.laboratorio}=='1'"
+						th:value="${centro_asis.idEstablecimiento}" th:text="${centro_asis.descripcionEstablecimiento}"></option>
+				</select>
+				<input type="hidden" th:field="${userForm.establecimiento.idEstablecimiento}" class="form-control"
+				th:unless="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+				th:disabled="${disableFields}"
+					id="centro_asis-filter" >
+					
+				<div class="alert-danger"
+					th:if="${#fields.hasErrors('establecimiento')}"
+					th:errors="*{establecimiento}">Name Error</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label th:text="Roles" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+				class="col-lg-3 col-form-label form-control-label"></label>
+			<div class="col-lg-9">
+				<select th:field="${userForm.roles}" class="form-control"
+				th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+					th:size="@{signup}?1 :3" th:disabled="${disableFields}">
+					<option th:each="role :${roles}" th:value="${role.id}"
+						th:text="${role.name}"></option>
+				</select>
+				<input type="hidden" th:field="${userForm.roles}" class="form-control"
+				th:unless="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+				th:disabled="${disableFields}"
+					id="centro_asis-filter" >
+				<div class="alert-danger" th:if="${#fields.hasErrors('roles')}"
+					th:errors="*{roles}">Name Error</div>
+			</div>
+		</div>
+
+		<div class="form-group row"
+			th:if="${editMode==null or editMode==false}">
+			<label class="col-lg-3 col-form-label form-control-label">Contraseña</label>
+			<div class="col-lg-9">
+				<input class="form-control" type="password"
+					th:field="${userForm.password}" th:disabled="${disableFields}">
+				<div class="alert-danger" th:if="${#fields.hasErrors('password')}"
+					th:errors="*{password}">Name Error</div>
+			</div>
+		</div>
+		<div class="form-group row"
+			th:if="${editMode==null or editMode==false}">
+			<label class="col-lg-3 col-form-label form-control-label">Confirma Contraseña</label>
+			<div class="col-lg-9">
+				<input class="form-control" type="password"
+					th:field="${userForm.confirmPassword}"
+					th:disabled="${disableFields}">
+				<div class="alert-danger"
+					th:if="${#fields.hasErrors('confirmPassword')}"
+					th:errors="*{confirmPassword}">Name Error</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-lg-3 col-form-label form-control-label" 
+			th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Estado</label>
+			<div class="col-lg-9">
+				<select th:field="${userForm.estado}" class="form-control"
+				th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+					th:disabled="${disableFields}">
+					<option value="1"></option>
+					<option th:value="1" th:text="Activo"></option>
+					<option th:value="0" th:text="Desactivado"></option>
+				</select>
+				<input type="hidden" th:field="${userForm.estado}" class="form-control"
+				th:unless="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+				th:disabled="${disableFields}"
+					id="centro_asis-filter" >
+				<div class="alert-danger" th:if="${#fields.hasErrors('estado')}"
+					th:errors="*{estado}">Name Error</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-lg-12 text-center">
+				<a class="btn btn-secondary" th:href="@{'/userForm/cancel'}">Cancelar</a>
+				<button type="button" class="btn btn-secondary" data-toggle="modal"
+					th:if="${editMode}" data-target="#changePasswordModal">Cambiar
+					Contraseña</button>
+				<input type="submit" class="btn btn-primary" value="Guardar Cambios"
+					th:value="${editMode}?'Guardar Usuario':'Crear Usuario'">
+			</div>
+		</div>
+		<div class="alert alert-danger text-center"
+			th:if="${formErrorMessage}" th:text="${formErrorMessage}">Error
+			Message</div>
+		<div class="alert alert-success text-center d-none" id="formSuccess"
+			th:if="${editMode}">Success Message</div>
+		<div class="alert alert-success text-center d-none" id="formSuccess">Success
+			Message</div>
+
+		
+		
+	</form>
+</div>

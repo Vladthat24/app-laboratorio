@@ -135,6 +135,17 @@ public class Microbiologia implements Serializable{
 	@Column(length = 5)
 	private String cultivoMycobacteriumTb;
 
+	@Column(length=5)
+	private String otras_pruebas;
+	
+	public String getOtras_pruebas() {
+		return otras_pruebas;
+	}
+
+	public void setOtras_pruebas(String otras_pruebas) {
+		this.otras_pruebas = otras_pruebas;
+	}
+
 	public Long getIdMicrobiologia() {
 		return idMicrobiologia;
 	}
@@ -438,7 +449,7 @@ public class Microbiologia implements Serializable{
 				+ ", usuarioModMic=" + usuarioModMic + ", fechaModMic=" + fechaModMic + ", ipRegMic=" + ipRegMic
 				+ ", ipModMic=" + ipModMic + ", anoMic=" + anoMic + ", mesMic=" + mesMic + ", proteinasOrina="
 				+ proteinasOrina + ", testCristalizacionHelecho=" + testCristalizacionHelecho
-				+ ", cultivoMycobacteriumTb=" + cultivoMycobacteriumTb + "]";
+				+ ", cultivoMycobacteriumTb=" + cultivoMycobacteriumTb + ", otras_pruebas=" + otras_pruebas + "]";
 	}
 
 	

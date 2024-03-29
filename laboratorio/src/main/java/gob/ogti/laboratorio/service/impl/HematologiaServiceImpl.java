@@ -50,6 +50,7 @@ public class HematologiaServiceImpl implements HematologiaService{
 		hm.setFrotisSangrePeriferica(h.getFrotisSangrePeriferica());
 		hm.setTotalHema(h.getTotalHema());
 		hm.setEstadoHema(h.getEstadoHema());
+		hm.setOtras_pruebas(h.getOtras_pruebas());
 		
 		hm.setUsuarioRegHem(us.getLoggedUser().getUsername());
 		hm.setFechaRegHem(new Timestamp(Calendar.getInstance().getTimeInMillis()));
@@ -79,6 +80,11 @@ public class HematologiaServiceImpl implements HematologiaService{
 		c.setBk(cc.getBk());
 		c.setGotaGruesa(cc.getGotaGruesa());
 		c.setEstablecimientoControl(us.getLoggedUser().getEstablecimiento());
+		c.setContrCalExtHem(cc.getContrCalExtHem());
+		c.setContrCalIntHem(cc.getContrCalIntHem());
+		c.setContrCalIntBio(cc.getContrCalIntBio());
+		c.setContrCalExtBio(cc.getContrCalExtBio());
+		c.setOtrosContrCal(cc.getOtrosContrCal());
 		
 		ccr.save(c);
 		
@@ -130,6 +136,7 @@ public class HematologiaServiceImpl implements HematologiaService{
 		hm.setFechaModHem(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 		hm.setIpModHem(clientIp);
 		hm.setHemoglobinaHemoglobimetro(h.getHemoglobinaHemoglobimetro());
+		hm.setOtras_pruebas(h.getOtras_pruebas());
 		
 		hr.save(hm);
 	}
@@ -158,7 +165,11 @@ public class HematologiaServiceImpl implements HematologiaService{
 		c.setTotalControl(cc.getTotalControl());
 		c.setBk(cc.getBk());
 		c.setGotaGruesa(cc.getGotaGruesa());
-		
+		c.setContrCalExtHem(cc.getContrCalExtHem());
+		c.setContrCalIntHem(cc.getContrCalIntHem());
+		c.setContrCalIntBio(cc.getContrCalIntBio());
+		c.setContrCalExtBio(cc.getContrCalExtBio());
+		c.setOtrosContrCal(cc.getOtrosContrCal());
 		ccr.save(c);
 		
 	}

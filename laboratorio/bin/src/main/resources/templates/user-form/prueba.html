@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="image/cenate-logo.ico" th:href="@{/image/cenate-logo.ico}" type="image/x-icon">
+    <title>Document</title>
+    <script
+	src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!--  Datatables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>  
+
+    <style>
+    .table thead, .table tfoot{
+        background-color: #455a64;
+        color:azure;
+    }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            <div class="card">
+	<div class="card-body">
+
+		<table class="table table-bordered table-hover table-striped">
+			<tr>
+				<td>
+					<div>
+						<span id="filter_col1" data-column="0"> <Label>ID</Label> <input
+							style="float: right" type="text" class="column_filter"
+							id="col0_filter">
+
+						</span>
+					</div>
+				</td>
+				<td>
+					<div>
+						<span id="filter_col2" data-column="1"> <label>Centro
+								Asistencial</label> <input style="float: right" type="text"
+							class="column_filter" id="col1_filter">
+
+						</span>
+					</div>
+				</td>
+				<td>
+					<div class="right">
+						<span id="filter_col3" data-column="2"> <label>AP
+								Paterno</label> <input style="float: right" type="text"
+							class="column_filter" id="col2_filter">
+						</span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="left">
+						<span id="filter_col4" data-column="3"> <Label>AP
+								Materno</Label> <input style="float: right" type="text"
+							class="column_filter" id="col3_filter">
+
+						</span>
+					</div>
+				</td>
+				<td>
+					<div>
+						<span id="filter_col5" data-column="4"> <label>Nombres</label>
+							<input style="float: right" type="text" class="column_filter"
+							id="col4_filter">
+
+						</span>
+					</div>
+				</td>
+				<td>
+					<div class="right">
+						<span id="filter_col6" data-column="5"> <label>Edad</label>
+							<input style="float: right" type="text" class="column_filter"
+							id="col5_filter">
+						</span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="left">
+						<span id="filter_col7" data-column="6"> <Label>Tipo
+								Doc.</Label> <input style="float: right" type="text"
+							class="column_filter" id="col6_filter">
+
+						</span>
+					</div>
+				</td>
+				<td>
+					<div>
+						<span id="filter_col8" data-column="7"> <label>Num
+								Doc. </label> <input style="float: right" type="text"
+							class="column_filter" id="col7_filter">
+
+						</span>
+					</div>
+				</td>
+				<td>
+					<div class="right">
+						<span id="filter_col9" data-column="8"> <label>Tipo
+								Estudio</label> <input style="float: right" type="text"
+							class="column_filter" id="col8_filter">
+						</span>
+					</div>
+				</td>
+			</tr>
+
+		</table>
+
+	</div>
+</div>
+            
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary ($)</th>
+                                    <th>Start date</th>
+                                    <th>Salary ($)</th>
+                                    <th>Start date</th>
+                                    <th>Salary ($)</th>
+                                    <th>Start date</th>
+                                    <th>Salary ($)</th>
+                                    <th>Start date</th>
+                                    <th>Salary ($)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>System Architect</td>
+                                    <td>Edinburgh</td>
+                                    <td>61</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Garrett Winters</td>
+                                    <td>Accountant</td>
+                                    <td>Tokyo</td>
+                                    <td>63</td>
+                                    <td>2011/07/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Ashton Cox</td>
+                                    <td>Junior Technical Author</td>
+                                    <td>San Francisco</td>
+                                    <td>66</td>
+                                    <td>2009/01/12</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Cedric Kelly</td>
+                                    <td>Senior Javascript Developer</td>
+                                    <td>Edinburgh</td>
+                                    <td>22</td>
+                                    <td>2012/03/29</td>
+                                    <td>500</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Airi Satou</td>
+                                    <td>Accountant</td>
+                                    <td>Tokyo</td>
+                                    <td>33</td>
+                                    <td>2008/11/28</td>
+                                    <td>500</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Brielle Williamson</td>
+                                    <td>Integration Specialist</td>
+                                    <td>New York</td>
+                                    <td>61</td>
+                                    <td>2012/12/02</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Herrod Chandler</td>
+                                    <td>Sales Assistant</td>
+                                    <td>San Francisco</td>
+                                    <td>59</td>
+                                    <td>2012/08/06</td>
+                                    <td>1000</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Rhona Davidson</td>
+                                    <td>Integration Specialist</td>
+                                    <td>Tokyo</td>
+                                    <td>55</td>
+                                    <td>2010/10/14</td>
+                                    <td>2000</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Colleen Hurst</td>
+                                    <td>Javascript Developer</td>
+                                    <td>San Francisco</td>
+                                    <td>39</td>
+                                    <td>2009/09/15</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Colleen Hurst</td>
+                                    <td>Javascript Developer</td>
+                                    <td>San Francisco</td>
+                                    <td>39</td>
+                                    <td>2009/09/15</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                </tr>   
+                                <tr>
+                                    <td>Colleen Hurst</td>
+                                    <td>Javascript Developer</td>
+                                    <td>San Francisco</td>
+                                    <td>39</td>
+                                    <td>2009/09/15</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                </tr>   
+                                <tr>
+                                    <td>Colleen Hurst</td>
+                                    <td>Javascript Developer</td>
+                                    <td>San Francisco</td>
+                                    <td>39</td>
+                                    <td>2009/09/15</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                    <td>2011/04/25</td>
+                                    <td>0</td>
+                                </tr>   
+                                                      
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    
+                                    
+                                </tr>
+                            </tfoot>
+                </table> 
+            </div>
+        </div>
+    </div>
+     
+   <div class="container">
+    <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-primary">
+            Total: <span id="totalsum" class="badge badge-light"></span>
+            </button>    
+        </div>
+    </div>
+   </div>     
+
+
+
+     <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        
+    <!--  Datatables JS-->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>   
+    <!-- SUM()  Datatables-->
+    <script src="https://cdn.datatables.net/plug-ins/1.10.20/api/sum().js"></script>
+
+    <script>
+    $(document).ready(function(){
+        var tabla = $("#example").DataTable({
+               "createdRow":function(row,data,index){                   
+                   //pintar una celda
+                   if(data[5] >= 1000){
+                       /* $('td', row).eq(5).css({
+                           'background-color':'#ff5252',
+                           'color':'white', 
+                       }); */
+                   
+                    //pintar una fila
+                    $('td', row).css({
+                           'background-color':'#ff5252',
+                           'color':'white',
+                           'border-style':'solid',
+                           'border-color':'#bdbdbd' 
+                       });
+                   }
+               }, 
+                "drawCallback":function(){
+                      //alert("La tabla se está recargando"); 
+                      var api = this.api();
+                      $(api.column(5).footer()).html(
+                          'Total: '+api.column(5, {page:'current'}).data().sum()
+                      )
+                }
+        });
+
+        //1era forma para sum()
+        //var tot = tabla.column(5).data().sum();
+        //$("#total").text(tot);
+    });
+    
+
+    
+    function filterColumn ( i ) {
+        $('#example').DataTable().column( i ).search(
+            $('#col'+i+'_filter').val(),
+            $('#col'+i+'_regex').prop('checked'),
+            $('#col'+i+'_smart').prop('checked')
+        ).draw();
+    }
+     
+    $(document).ready(function() {
+        var tabla = $('#example').DataTable();
+     
+        $('input.global_filter').on( 'keyup click', function () {
+            filterGlobal();
+        } );
+     
+        $('input.column_filter').on( 'keyup click', function () {
+            filterColumn( $(this).parents('span').attr('data-column') );
+        } );
+        var tot = tabla.column(5).data().sum();
+        $("#totalsum").text(tot);
+    	
+    } );/**
+     * 
+     */
+     
+    </script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../../img/favicon.ico"
+	type="image/x-icon">
+<head>
+
+<title>DIRIS LIMA SUR - TOMA DE MUESTRAS Y PRUEBAS DE DX DE SARS
+	CoV2 - COVID19</title>
+
+<!--JQUERY-->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+<link rel="stylesheet" type="text/css"
+	href="static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+
+<!-- Los iconos tipo Solid de Fontawesome-->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+<!-- Nuestro css-->
+<link rel="stylesheet" type="text/css" href="static/css/user-form.css"
+	th:href="@{/css/user-form.css}">
+<!-- DATA TABLE -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+
+
+
+<style type="text/css">
+.form-control {
+	font-size: 12px;
+}
+
+.radioB {
+	font-family: system-ui, sans-serif;
+	font-size: 1rem;
+	font-weight: bold;
+	line-height: 1.1;
+	display: grid;
+	grid-template-columns: 1em auto;
+	gap: 0.5em;
+	font-weight: bold;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="static/css/navbar.css"
+	th:href="@{/css/navbar.css}">
+
+<script type="text/javascript">
+	function sumar() {
+
+		var total = 0;
+
+		$(".monto").each(function() {
+			if (isNaN(parseFloat($(this).val()))) {
+				total += 0;
+			} else {
+				total += parseFloat($(this).val());
+			}
+		});
+		document.getElementById('totalTpCovid').value = total;
+	}
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var n = (new Date()).getFullYear()
+
+		var select = document.getElementById("ano");
+		for (var i = n; i >= 2022; i--)
+			select.options.add(new Option(i, i));
+
+		function obtenerNombreMes(numero) {
+			var today = new Date();
+			let miFecha = new Date(today.getFullYear(), today.getMonth(), 0);
+			if (0 < numero && numero <= 12) {
+				miFecha.setMonth(numero - 1);
+				return new Intl.DateTimeFormat('es-PE', {
+					month : 'long'
+				}).format(miFecha);
+			} else {
+				return null;
+			}
+
+		}
+		var selectMes = document.getElementById("mes");
+		for (var i = 1; i <= 12; i++) {
+			console.log(new Option(obtenerNombreMes(i), i))
+			selectMes.options.add(new Option(obtenerNombreMes(i), i));
+		}
+
+	})
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		setTimeout(function() {
+			$('#success-alert').hide('slow');
+		}, 3000); // <-- time in milliseconds
+	})
+</script>
+
+</head>
+<body>
+
+	<div th:include="etiquetas/header.html" th:remove="tag"></div>
+	<div class="container" style="max-width: 70%;">
+		<div class="mx-auto col-sm-12 main-section" id="myTab" role="tablist">
+
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="list" role="tabpanel"
+					aria-labelledby="list-tab">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="text-center">TOMA DE MUESTRAS Y PRUEBAS DE DX DE
+								SARS CoV2 - COVID19</h4>
+
+						</div>
+
+						<div class="card-body">
+							<div class="table-responsive">
+								<div class="col-sm-12 col-md-12 col-lg-12 text-center mt-5 mb-5"
+									id="contenedor">
+
+									<div id="success-alert"
+										th:classappend="'alert-'+ (${clase != null} ? ${clase} : info)"
+										th:if="${mensaje != null}" th:text="${mensaje}" class="alert"></div>
+
+									<form action="#" th:action="@{/mpcovid19}"
+										style="font-size: 12px;" th:object="${mpcovid19}" class="form"
+										method="post">
+
+										<div class="form-group row">
+
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> AÑO </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<select name="anoTpc" id="ano" class="form-control"></select>
+													</div>
+												</div>
+
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> MES </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<select name="mesTpc" id="mess" class="form-control"
+															style="text-transform: uppercase;"
+															onkeyup="javascript:this.value=this.value.toUpperCase();">
+															<option value="1">Enero</option>
+															<option value="2">Febrero</option>
+															<option value="3">Marzo</option>
+															<option value="4">Abril</option>
+															<option value="5">Mayo</option>
+															<option value="6">Junio</option>
+															<option value="7">Julio</option>
+															<option value="8">Agosto</option>
+															<option value="9">Septiembre</option>
+															<option value="10">Octubre</option>
+															<option value="11">Noviembre</option>
+															<option value="12">Diciembre</option>
+
+														</select>
+													</div>
+												</div>
+
+											</div>
+
+
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PRUEBAS RÁPIDAS DE ANTIGENO SARS CoV2 </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0"
+															id="pruebaRapidaAntigenoCo" name="pruebaRapidaAntigenoCo"
+															onkeyup="sumar();" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> TOMA DE MUEST. PARA PRUEBA MOLECULAR PARA
+															SARS CoV2 </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0"
+															id="tomaMuestraMolecularCo" onkeyup="sumar();"
+															name="tomaMuestraMolecularCo" type="number"
+															class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> REGISTRO DE DATOS AL SISTEMA SISCOVID </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="ingresoDatosSiscovid" name="ingresoDatosSiscovid"
+															type="number" class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> PRUEBAS MOLECULARES PARA DETECCIÓN DE SARS
+															COV2-EAIF </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="pruebaMolCovidEaif" name="pruebaMolCovidEaif"
+															type="number" class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> REGISTRO DE DATOS DE PRUEBAS MOLECULARES
+															AL SISTEMA NET LAB </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" onkeyup="sumar();"
+															id="ingresoDatosMolNetlab" name="ingresoDatosMolNetlab"
+															type="number" class="form-control monto">
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-12 col-lg-6">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<label> TOTAL </label>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<input required="required" value="0" readonly="readonly"
+															id="totalTpCovid" name="totalTpCovid" type="number"
+															class="form-control">
+													</div>
+												</div>
+											</div>
+											<select id="estadoTpCovid" name="estadoTpCovid"
+												style="opacity: 0">
+												<option th:each="e : ${estado}" th:text="${e.descEstado}"
+													th:value="${e.idEstado}">
+											</select>
+
+											<div class="col-sm-12 col-md-12 col-lg-12">
+												<div class="form-group row">
+													<div class="col-sm-12 col-md-12 col-lg-12">
+														<button type="submit" id="show" data-toggle="modal"
+															class="btn btn-primary" data-target="#saludo"
+															th:text="GRABAR"></button>
+													</div>
+
+												</div>
+											</div>
+										</div>
+
+									</form>
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!-- row -->
+
+	<!-- Call to Action -->
+	<div th:include="etiquetas/footer.html" th:remove="tag"></div>
+</body>
+</html>

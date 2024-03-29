@@ -112,6 +112,18 @@ public class Hematologia implements Serializable{
 	
 	@Column(length = 50)
 	private String mesHem;
+	
+	@Column(length=50)
+	private String otras_pruebas;
+	
+
+	public String getOtras_pruebas() {
+		return otras_pruebas;
+	}
+
+	public void setOtras_pruebas(String otras_pruebas) {
+		this.otras_pruebas = otras_pruebas;
+	}
 
 	public Long getIdHematologia() {
 		return idHematologia;
@@ -355,7 +367,7 @@ public class Hematologia implements Serializable{
 				+ ", frotisSangrePeriferica=" + frotisSangrePeriferica + ", totalHema=" + totalHema + ", usuarioRegHem="
 				+ usuarioRegHem + ", fechaRegHem=" + fechaRegHem + ", usuarioModHem=" + usuarioModHem + ", fechaModHem="
 				+ fechaModHem + ", ipRegHem=" + ipRegHem + ", ipModHem=" + ipModHem + ", anoHem=" + anoHem + ", mesHem="
-				+ mesHem + "]";
+				+ mesHem + ", otras_pruebas=" + otras_pruebas + "]";
 	}
 
 	

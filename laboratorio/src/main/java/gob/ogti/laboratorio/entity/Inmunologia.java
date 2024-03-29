@@ -170,7 +170,16 @@ public class Inmunologia implements Serializable{
 	@Column(length = 5)
 	private String pruebaHepatitisA;
 	
-	
+	@Column(length=5)
+	private String otras_pruebas;
+
+	public String getOtras_pruebas() {
+		return otras_pruebas;
+	}
+
+	public void setOtras_pruebas(String otras_pruebas) {
+		this.otras_pruebas = otras_pruebas;
+	}
 
 	public String getPruebaHepatitisA() {
 		return pruebaHepatitisA;
@@ -576,7 +585,7 @@ public class Inmunologia implements Serializable{
 				+ ", perfilCarDimeroD=" + perfilCarDimeroD + ", perfilCarTroponinI=" + perfilCarTroponinI
 				+ ", perfilCarNtProbnp=" + perfilCarNtProbnp + ", pruebaHepatitisC=" + pruebaHepatitisC
 				+ ", cargaViralHiv=" + cargaViralHiv + ", elisaHiv=" + elisaHiv + ", pruebaHepatitisA="
-				+ pruebaHepatitisA + "]";
+				+ pruebaHepatitisA + ", otras_pruebas=" + otras_pruebas + "]";
 	}
 
 	

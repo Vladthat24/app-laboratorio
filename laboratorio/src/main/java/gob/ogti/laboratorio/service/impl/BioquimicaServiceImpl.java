@@ -84,6 +84,8 @@ public class BioquimicaServiceImpl implements BioquimicaService {
 		bi.setEstadoBio(b.getEstadoBio());
 		bi.setDepuracionCreatinina(b.getDepuracionCreatinina());
 		bi.setGlucosaTiraGlucometro(b.getGlucosaTiraGlucometro());
+		bi.setTamMicroCreaOriTira(b.getTamMicroCreaOriTira());
+		bi.setOtras_pruebas(b.getOtras_pruebas());
 
 		br.save(bi);
 
@@ -174,7 +176,8 @@ public class BioquimicaServiceImpl implements BioquimicaService {
 		bi.setEstadoBio(b.getEstadoBio());
 		bi.setDepuracionCreatinina(b.getDepuracionCreatinina());
 		bi.setGlucosaTiraGlucometro(b.getGlucosaTiraGlucometro());
-
+		bi.setTamMicroCreaOriTira(b.getTamMicroCreaOriTira());
+		bi.setOtras_pruebas(b.getOtras_pruebas());
 		br.save(bi);
 		
 	}

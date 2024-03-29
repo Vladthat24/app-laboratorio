@@ -57,7 +57,7 @@ public class MicrobiologiaServiceImpl implements MicrobiologiaService {
 		mi.setProteinasOrina(m.getProteinasOrina());
 		mi.setTestCristalizacionHelecho(m.getTestCristalizacionHelecho());
 		mi.setCultivoMycobacteriumTb(m.getCultivoMycobacteriumTb());
-
+		mi.setOtras_pruebas(m.getOtras_pruebas());
 		mr.save(mi);
 
 	}
@@ -115,7 +115,7 @@ public class MicrobiologiaServiceImpl implements MicrobiologiaService {
 		mi.setProteinasOrina(m.getProteinasOrina());
 		mi.setTestCristalizacionHelecho(m.getTestCristalizacionHelecho());
 		mi.setCultivoMycobacteriumTb(m.getCultivoMycobacteriumTb());
-
+		mi.setOtras_pruebas(m.getOtras_pruebas());
 		mr.save(mi);
 
 		

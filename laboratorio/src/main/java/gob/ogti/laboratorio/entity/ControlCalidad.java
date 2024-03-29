@@ -70,7 +70,60 @@ public class ControlCalidad implements Serializable{
 	@JoinColumn(name = "codEstablecimiento", referencedColumnName = "codEstablecimiento")
 	private Establecimiento establecimientoControl;
 	
+	@Column(length=5)
+	private String contrCalExtHem;
 	
+	@Column(length=5)
+	private String contrCalIntHem;
+	
+	@Column(length=5)
+	private String contrCalIntBio;
+	
+	@Column(length=5)
+	private String contrCalExtBio;
+	
+	@Column(length=5)
+	private String otrosContrCal;
+
+	public String getContrCalExtHem() {
+		return contrCalExtHem;
+	}
+
+	public void setContrCalExtHem(String contrCalExtHem) {
+		this.contrCalExtHem = contrCalExtHem;
+	}
+
+	public String getContrCalIntHem() {
+		return contrCalIntHem;
+	}
+
+	public void setContrCalIntHem(String contrCalIntHem) {
+		this.contrCalIntHem = contrCalIntHem;
+	}
+
+	public String getContrCalIntBio() {
+		return contrCalIntBio;
+	}
+
+	public void setContrCalIntBio(String contrCalIntBio) {
+		this.contrCalIntBio = contrCalIntBio;
+	}
+
+	public String getContrCalExtBio() {
+		return contrCalExtBio;
+	}
+
+	public void setContrCalExtBio(String contrCalExtBio) {
+		this.contrCalExtBio = contrCalExtBio;
+	}
+
+	public String getOtrosContrCal() {
+		return otrosContrCal;
+	}
+
+	public void setOtrosContrCal(String otrosContrCal) {
+		this.otrosContrCal = otrosContrCal;
+	}
 
 	public Establecimiento getEstablecimientoControl() {
 		return establecimientoControl;
@@ -195,7 +248,9 @@ public class ControlCalidad implements Serializable{
 				+ ", usuarioControl=" + usuarioControl + ", fechaRegControl=" + fechaRegControl + ", usuarioModControl="
 				+ usuarioModControl + ", fechaModControl=" + fechaModControl + ", ipRegControl=" + ipRegControl
 				+ ", ipModControl=" + ipModControl + ", estadoControl=" + estadoControl + ", establecimientoControl="
-				+ establecimientoControl + "]";
+				+ establecimientoControl + ", contrCalExtHem=" + contrCalExtHem + ", contrCalIntHem=" + contrCalIntHem
+				+ ", contrCalIntBio=" + contrCalIntBio + ", contrCalExtBio=" + contrCalExtBio + ", otrosContrCal="
+				+ otrosContrCal + "]";
 	}
 
 	

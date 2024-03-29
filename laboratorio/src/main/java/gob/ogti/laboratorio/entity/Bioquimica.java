@@ -140,6 +140,28 @@ public class Bioquimica implements Serializable {
 	
 	@Column(length = 5)
 	private String glucosaTiraGlucometro;
+	
+	@Column(length=5)
+	private String tamMicroCreaOriTira;
+	
+	@Column(length=5)
+	private String otras_pruebas;
+
+	public String getTamMicroCreaOriTira() {
+		return tamMicroCreaOriTira;
+	}
+
+	public void setTamMicroCreaOriTira(String tamMicroCreaOriTira) {
+		this.tamMicroCreaOriTira = tamMicroCreaOriTira;
+	}
+
+	public String getOtras_pruebas() {
+		return otras_pruebas;
+	}
+
+	public void setOtras_pruebas(String otras_pruebas) {
+		this.otras_pruebas = otras_pruebas;
+	}
 
 	public Long getIdBioquimica() {
 		return idBioquimica;
@@ -459,7 +481,8 @@ public class Bioquimica implements Serializable {
 				+ totalBio + ", usuarioRegBio=" + usuarioRegBio + ", fechaRegBio=" + fechaRegBio + ", usuarioModBio="
 				+ usuarioModBio + ", fechaModBio=" + fechaModBio + ", ipRegBio=" + ipRegBio + ", ipModBio=" + ipModBio
 				+ ", anoBio=" + anoBio + ", mesBio=" + mesBio + ", depuracionCreatinina=" + depuracionCreatinina
-				+ ", glucosaTiraGlucometro=" + glucosaTiraGlucometro + "]";
+				+ ", glucosaTiraGlucometro=" + glucosaTiraGlucometro + ", tamMicroCreaOriTira=" + tamMicroCreaOriTira
+				+ ", otras_pruebas=" + otras_pruebas + "]";
 	}
 	
 	
