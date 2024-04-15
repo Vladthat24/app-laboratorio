@@ -83,6 +83,10 @@ public class TomaPruebaCovid19 implements Serializable{
 	
 	@Column(length = 5)
 	private String ingresoDatosMolNetlab;
+	
+	@Column(length =5)
+	private String otros_reg_prueba_covid19;
+	
 
 	public Long getIdTpCovid() {
 		return idTpCovid;
@@ -232,6 +236,16 @@ public class TomaPruebaCovid19 implements Serializable{
 		return serialVersionUID;
 	}
 
+	
+	public String getOtros_reg_prueba_covid19() {
+		return otros_reg_prueba_covid19;
+	}
+
+	public void setOtros_reg_prueba_covid19(String otros_reg_prueba_covid19) {
+		this.otros_reg_prueba_covid19 = otros_reg_prueba_covid19;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "TomaPruebaCovid19 [idTpCovid=" + idTpCovid + ", establecimientoTpCovid=" + establecimientoTpCovid
@@ -242,7 +256,7 @@ public class TomaPruebaCovid19 implements Serializable{
 				+ ", usuarioModTpCovid=" + usuarioModTpCovid + ", fechaModTpCovid=" + fechaModTpCovid
 				+ ", ipRegTpCovid=" + ipRegTpCovid + ", ipModTpCovid=" + ipModTpCovid + ", anoTpc=" + anoTpc
 				+ ", mesTpc=" + mesTpc + ", pruebaMolCovidEaif=" + pruebaMolCovidEaif + ", ingresoDatosMolNetlab="
-				+ ingresoDatosMolNetlab + "]";
+				+ ingresoDatosMolNetlab + ", otros_reg_prueba_covid19=" + otros_reg_prueba_covid19 + "]";
 	}
 	
 	

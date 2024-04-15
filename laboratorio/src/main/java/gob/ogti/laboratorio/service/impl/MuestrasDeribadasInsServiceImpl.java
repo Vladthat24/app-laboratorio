@@ -65,6 +65,8 @@ public class MuestrasDeribadasInsServiceImpl implements MuestrasDeribadasInsServ
 		mdi.setEnfManoPieCox(md.getEnfManoPieCox());
 		mdi.setClamidia(md.getClamidia());
 		mdi.setNeisseriaGonorrea(md.getNeisseriaGonorrea());
+		mdi.setParalisis_flacida_aguda(md.getParalisis_flacida_aguda());
+		mdi.setOtras_pruebas(md.getOtras_pruebas());
 		
 		mdir.save(mdi);
 		
@@ -131,7 +133,8 @@ public class MuestrasDeribadasInsServiceImpl implements MuestrasDeribadasInsServ
 		mdi.setEnfManoPieCox(md.getEnfManoPieCox());
 		mdi.setClamidia(md.getClamidia());
 		mdi.setNeisseriaGonorrea(md.getNeisseriaGonorrea());
-		
+		mdi.setParalisis_flacida_aguda(md.getParalisis_flacida_aguda());
+		mdi.setOtras_pruebas(md.getOtras_pruebas());
 		mdir.save(mdi);
 	}
 

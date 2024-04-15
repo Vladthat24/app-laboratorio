@@ -152,6 +152,14 @@ public class MuestrasDerivadasIns implements Serializable {
 	@Column(length = 5)
 	private String neisseriaGonorrea;
 
+
+	@Column(length = 5)
+	private String paralisis_flacida_aguda;
+	
+	@Column(length = 5)
+	private String otras_pruebas;
+
+	
 	public Long getIdMuestras() {
 		return idMuestras;
 	}
@@ -483,7 +491,23 @@ public class MuestrasDerivadasIns implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	public String getParalisis_flacida_aguda() {
+		return paralisis_flacida_aguda;
+	}
 
+	public void setParalisis_flacida_aguda(String paralisis_flacida_aguda) {
+		this.paralisis_flacida_aguda = paralisis_flacida_aguda;
+	}
+
+	public String getOtras_pruebas() {
+		return otras_pruebas;
+	}
+
+	public void setOtras_pruebas(String otras_pruebas) {
+		this.otras_pruebas = otras_pruebas;
+	}
+	
 	@Override
 	public String toString() {
 		return "MuestrasDerivadasIns [idMuestras=" + idMuestras + ", establecimientoMuestras=" + establecimientoMuestras
@@ -501,7 +525,8 @@ public class MuestrasDerivadasIns implements Serializable {
 				+ brucelosis + ", toxoplasmosis=" + toxoplasmosis + ", hepatitis=" + hepatitis + ", chicungunya="
 				+ chicungunya + ", zika=" + zika + ", hidatidosis=" + hidatidosis + ", citomegalovirus="
 				+ citomegalovirus + ", fiebreAmarilla=" + fiebreAmarilla + ", enfManoPieCox=" + enfManoPieCox
-				+ ", clamidia=" + clamidia + ", neisseriaGonorrea=" + neisseriaGonorrea + "]";
+				+ ", clamidia=" + clamidia + ", neisseriaGonorrea=" + neisseriaGonorrea + ", paralisis_flacida_aguda="
+				+ paralisis_flacida_aguda + ", otras_pruebas=" + otras_pruebas + "]";
 	}
 	
 	

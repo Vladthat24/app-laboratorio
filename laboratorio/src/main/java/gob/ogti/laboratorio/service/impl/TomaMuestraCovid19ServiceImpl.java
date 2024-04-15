@@ -39,6 +39,7 @@ public class TomaMuestraCovid19ServiceImpl implements TomaMuestraCovid19Service{
 		tp.setTotalTpCovid(tpc.getTotalTpCovid());
 		tp.setPruebaMolCovidEaif(tpc.getPruebaMolCovidEaif());
 		tp.setIngresoDatosMolNetlab(tpc.getIngresoDatosMolNetlab());
+		tp.setOtros_reg_prueba_covid19(tpc.getOtros_reg_prueba_covid19());
 		
 		tpr.save(tp);
 	}
@@ -83,7 +84,7 @@ public class TomaMuestraCovid19ServiceImpl implements TomaMuestraCovid19Service{
 		tp.setTotalTpCovid(tpc.getTotalTpCovid());
 		tp.setPruebaMolCovidEaif(tpc.getPruebaMolCovidEaif());
 		tp.setIngresoDatosMolNetlab(tpc.getIngresoDatosMolNetlab());
-		
+		tp.setOtros_reg_prueba_covid19(tpc.getOtros_reg_prueba_covid19());
 		tpr.save(tp);
 		
 	}
